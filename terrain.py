@@ -1,6 +1,6 @@
 from pyglet.gl import *
 import numpy as np
-import terrainShape
+# import terrainShape
 
 
 class Terrain(object):

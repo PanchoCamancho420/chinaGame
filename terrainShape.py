@@ -41,7 +41,7 @@ class _NoiseGetter(object):
         return self.inverse_weight
 
 
-class TerrainShape2(object):
+class TerrainShape(object):
     def __init__(self, seed=None, island_location=(0.0, 0.0), size=1.0, height=5.0):
 
         if seed is None:

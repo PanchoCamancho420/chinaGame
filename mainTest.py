@@ -39,7 +39,9 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
-        self.shape = terrainShape.TerrainShape(seed=11, island_location=(0, 0), size=1, height=.025)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        self.shape = terrainShape.TerrainShape(seed=11, island_location=(0, 0), size=15, height=1)
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         self.camera = FpsCamera(self)
         self.draw_number = 0  # the first rendered frame is 1
@@ -53,7 +55,9 @@ class World(pyglet.window.Window):
             print 'Could not find directory "%s" under "%s"' % (img_dir,
                                                                 os.getcwd())
             sys.exit(1)
-        for image in os.listdir(img_dir):
+        img_paths = os.listdir(img_dir)
+        img_paths.sort()
+        for image in img_paths:
             try:
                 if not image == '.DS_Store':
                     image = pyglet.image.load(os.path.join(img_dir, image))
@@ -86,8 +90,10 @@ class World(pyglet.window.Window):
         glLoadIdentity()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         self.camera.draw()
+
         shape = self.shape
         terrain = Terrain(self.textures[0], shape)
+        print len(self.textures)
         mat = terrain.get_example_mat(20, 20)
 
         import matTerrian
