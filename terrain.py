@@ -69,11 +69,17 @@ class Terrain(object):
         ret_y = y / self.resolution + self.xyz[1]
         return ret_x, ret_y
 
-    '''Return the x y z location on the TerrainShape from mapping an x, y'''
+    '''Return the z location on the TerrainShape from mapping an x, y'''
     def get_z(self, x, y):
         loc = self.draw_xy_to_terrain_xy(x, y)
         height = self.terrain_shape.get_height(loc[0], loc[1])
         return height
+
+    '''Return the x y z location on the TerrainShape from mapping an x, y'''
+    def get_xyz(self, x, y):
+        x_loc, y_loc = self.draw_xy_to_terrain_xy(x, y)
+        height = self.terrain_shape.get_height(x_loc, y_loc)
+        return x_loc, y_loc, height
 
     '''Converts a matrix xy to a sample location'''
     def __mat_xy_to_map_xy(self, x, y):
@@ -115,7 +121,7 @@ class Terrain(object):
 
     '''Call OpenGL to create triangle based terrain'''
     def draw(self):
-        pass
+        self._draw()
 
     # ~~~~~~~~~~ DRAWING FUNCTION ~~~~~~~~~~~~~~~~~~~~~~~~
     def _draw(self):
@@ -123,7 +129,7 @@ class Terrain(object):
         x_size, y_size = self.size
         for x in range(0, x_size, 1):
             for y in range(1, y_size - 1, 1):
-                self.dual_tri(x, y)
+                self.dual_tri(x - int(x_size / 2), y - int(y_size / 2))
 
         glFlush()
 
@@ -156,7 +162,7 @@ class Terrain(object):
         b_x, b_y = self.convert_xy_to_location(b_xy[0], b_xy[1])
         b_x += self.xyz[0]
         b_y += self.xyz[1]
-        b_z = self.get_z(r_x, r_y) + self.xyz[2]
+        b_z = self.get_z(b_x, b_y) + self.xyz[2]
         bottom_point = np.array([b_x, b_z, b_y])
 
         top_tri = np.array([left_point, top_point, right_point])

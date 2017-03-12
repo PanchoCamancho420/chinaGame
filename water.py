@@ -4,13 +4,13 @@ from pyglet.gl import *
 class Water(object):
     # self, x, y, z, x_size, y_size, texture, texture_scale=1.0
     def __init__(self, terrian, texture, texture_scale=1.0):
-        shape_x, shape_y = terrian.get_mat().shape
+        shape_x, shape_y = terrian.size
 
-        x, y = terrian.convert_xy_to_location((shape_x, shape_y))
+        # x, y = terrian.convert_xy_to_location(shape_x, shape_y)
 
-        self.x_skew = x
-        self.y_skew = y
-        self.z_skew = terrian.z_skew + (0.4 * terrian.scale)
+        self.x_skew = terrian.xyz[0]
+        self.y_skew = terrian.xyz[1]
+        self.z_skew = terrian.xyz[2] + 0.4
 
         self.x_size = shape_x
         self.y_size = shape_y

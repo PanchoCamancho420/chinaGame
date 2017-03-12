@@ -6,6 +6,8 @@ import matTerrian
 import building
 from camera import Camera as FpsCamera
 import map
+from terrain import Terrain
+from terrainShape import TerrainShape
 
 import os
 import sys
@@ -40,20 +42,23 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
-        land = matTerrian.Terrain(matTerrian.get_example_2(), 0, 0, 0, 1.0, self.textures[0], 0.5)
+        shape = TerrainShape(seed=11, island_location=(0, 0), size=4, height=.5)
+        sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
 
-        fort = building.Building(5, 5, .1)
-        fort_2 = building.Building(5, 4, .1)
-        fort_3 = building.Building(4, 5, .2)
-        fort_4 = building.Building(4, 4, .1)
-        fort_outpost = building.Building(12, 4, .07)
+        fort = building.Building(1, 1, .1)
+        fort_2 = building.Building(2, 1, .1)
+        fort_3 = building.Building(1, 2, .2)
+        fort_4 = building.Building(2, 2, .1)
+        fort_outpost = building.Building(-2, -2, .07)
+        fort_king = building.Building(0, 0, .25)
 
-        self.map = map.Map(self.textures[1], land)
+        self.map = map.Map(self.textures[1], sand)
         self.map.add_building(fort)
         self.map.add_building(fort_2)
         self.map.add_building(fort_3)
         self.map.add_building(fort_4)
         self.map.add_building(fort_outpost)
+        self.map.add_building(fort_king)
 
         self.camera = FpsCamera(self)
         self.draw_number = 0  # the first rendered frame is 1
@@ -99,7 +104,9 @@ class World(pyglet.window.Window):
 
         glLoadIdentity()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
         self.camera.draw()
+
         self.map.draw()
 
     def on_resize(self, width, height):

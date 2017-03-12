@@ -2,9 +2,8 @@ import water
 
 
 class Map(object):
-    def __init__(self, water_texture, land, buildings=None, waves=0.01):
+    def __init__(self, water_texture, land, buildings=None):
         self.land = land
-        self.waves = waves
         self.water_texture = water_texture
         self.water = water.Water(self.land, self.water_texture, 1.0)
         self.buildings = []

@@ -41,7 +41,7 @@ class World(pyglet.window.Window):
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         self.shape = terrainShape.TerrainShape(seed=11, island_location=(0, 0), size=15, height=1)
-        self.terrain = Terrain(self.textures[3], self.shape)
+        self.terrain = Terrain(self.textures[2], self.shape, size=(10, 10), resolution=1)
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         self.camera = FpsCamera(self)
