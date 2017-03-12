@@ -163,7 +163,7 @@ def draw_tri(mat, scale, texture, tex_scale=1.0):
     tri_point_1 = numpy_mat[1]
     tri_point_2 = numpy_mat[2]
 
-    # glBindTexture(texture.target, texture.id)
+    glBindTexture(texture.target, texture.id)
 
     glBegin(GL_TRIANGLES)  # Begin drawing the pyramid with 4 triangles
     glColor3f(1.0, 0.8, 0.8)  # Red
