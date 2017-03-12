@@ -51,11 +51,8 @@ class World(pyglet.window.Window):
     def load_textures(self):
         img_dir = self.file_path
         textures = []
-        if not os.path.isdir(img_dir):
-            print 'Could not find directory "%s" under "%s"' % (img_dir,
-                                                                os.getcwd())
-            sys.exit(1)
         img_paths = os.listdir(img_dir)
+        print img_paths
         img_paths.sort()
         for image in img_paths:
             try:
@@ -93,7 +90,6 @@ class World(pyglet.window.Window):
 
         shape = self.shape
         terrain = Terrain(self.textures[0], shape)
-        print len(self.textures)
         mat = terrain.get_example_mat(20, 20)
 
         import matTerrian
