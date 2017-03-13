@@ -1,6 +1,6 @@
 import pyglet
-import collections
 import math
+import inputHandler
 
 
 class Camera(object):
@@ -17,22 +17,6 @@ class Camera(object):
         'up': pyglet.window.key.SPACE,
         'down': pyglet.window.key.LSHIFT
     }
-
-    class InputHandler(object):
-        def __init__(self):
-            self.pressed = collections.defaultdict(bool)
-            self.dx = 0
-            self.dy = 0
-
-        def on_key_press(self, symbol, modifiers):
-            self.pressed[symbol] = True
-
-        def on_key_release(self, symbol, modifiers):
-            self.pressed[symbol] = False
-
-        def on_mouse_motion(self, x, y, dx, dy):
-            self.dx = dx
-            self.dy = dy
 
     def __init__(self, window, position=(0, 0, 0), key_map=DEFAULT_KEY_MAP, movement_speed=DEFAULT_MOVEMENT_SPEED,
                  mouse_sensitivity=DEFAULT_MOUSE_SENSITIVITY, y_inv=True):
@@ -51,7 +35,7 @@ class Camera(object):
         self.__yaw = 0.0
         self.__pitch = 0.0
 
-        self.__input_handler = Camera.InputHandler()
+        self.__input_handler = inputHandler.InputHandler()
 
         window.push_handlers(self.__input_handler)
 
@@ -59,6 +43,9 @@ class Camera(object):
         self.key_map = key_map
         self.movement_speed = movement_speed
         self.mouse_sensitivity = mouse_sensitivity
+
+        self.keyboard_control = False
+        self.mouse_control = False
 
     def yaw(self, yaw):
         """Turn above x-axis"""
@@ -107,29 +94,37 @@ class Camera(object):
 
     def update(self, delta_time):
         """Update camera state"""
-        self.yaw(self.__input_handler.dx)
-        self.__input_handler.dx = 0
+        if self.mouse_control is True:
+            self.yaw(self.__input_handler.get_dx())
+            self.__input_handler.__dx = 0
 
-        self.pitch(self.__input_handler.dy)
-        self.__input_handler.dy = 0
+            self.pitch(self.__input_handler.get_dy())
+            self.__input_handler.__dy = 0
 
-        if self.__input_handler.pressed[self.key_map['forward']]:
-            self.move_forward(delta_time * self.movement_speed)
+        if self.keyboard_control is True:
+            if self.__input_handler.get_pressed()[self.key_map['forward']]:
+                self.move_forward(delta_time * self.movement_speed)
 
-        if self.__input_handler.pressed[self.key_map['backward']]:
-            self.move_backward(delta_time * self.movement_speed)
+            if self.__input_handler.get_pressed()[self.key_map['backward']]:
+                self.move_backward(delta_time * self.movement_speed)
 
-        if self.__input_handler.pressed[self.key_map['left']]:
-            self.move_left(delta_time * self.movement_speed)
+            if self.__input_handler.get_pressed()[self.key_map['left']]:
+                self.move_left(delta_time * self.movement_speed)
 
-        if self.__input_handler.pressed[self.key_map['right']]:
-            self.move_right(delta_time * self.movement_speed)
+            if self.__input_handler.get_pressed()[self.key_map['right']]:
+                self.move_right(delta_time * self.movement_speed)
 
-        if self.__input_handler.pressed[self.key_map['up']]:
-            self.move_up(delta_time * self.movement_speed)
+            if self.__input_handler.get_pressed()[self.key_map['up']]:
+                self.move_up(delta_time * self.movement_speed)
 
-        if self.__input_handler.pressed[self.key_map['down']]:
-            self.move_down(delta_time * self.movement_speed)
+            if self.__input_handler.get_pressed()[self.key_map['down']]:
+                self.move_down(delta_time * self.movement_speed)
+
+    def set_control(self, mouse, key_board):
+        self.mouse_control = mouse
+        self.keyboard_control = key_board
+        # do this because wants both
+        return not mouse, not key_board
 
     def draw(self):
         """Apply transform"""

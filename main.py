@@ -42,7 +42,7 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
-        shape = TerrainShape(seed=11, island_location=(0, 0), size=4, height=.5)
+        shape = TerrainShape(seed=12, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
 
         fort = building.Building(1, 1, .1)
@@ -61,6 +61,7 @@ class World(pyglet.window.Window):
         self.map.add_building(fort_king)
 
         self.camera = FpsCamera(self)
+        self.camera.set_control(True, True)
         self.draw_number = 0  # the first rendered frame is 1
 
         pyglet.clock.schedule_interval(self.update, 1 / 60.0)
