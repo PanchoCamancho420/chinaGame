@@ -53,11 +53,20 @@ class Building(object):
         glEnd()
 
         # Red
+        # glBegin(GL_POLYGON)
+
+        # glVertex3f(self.scale, -self.scale, -self.scale)
+        # glVertex3f(self.scale, -self.scale, self.scale)
+        # glVertex3f(-self.scale, -self.scale, self.scale)
+        # glVertex3f(-self.scale, -self.scale, -self.scale)
+
+        # glEnd()
+
         glBegin(GL_POLYGON)
 
         glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, -self.scale, self.scale)
+        glVertex3f(self.scale, self.scale, -self.scale)
+        glVertex3f(-self.scale, self.scale, -self.scale)
         glVertex3f(-self.scale, -self.scale, -self.scale)
 
         glEnd()

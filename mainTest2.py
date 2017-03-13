@@ -113,7 +113,7 @@ class World(pyglet.window.Window):
 
     def update(self, delta_time):
         if self.input_handler.get_pressed()[pyglet.window.key.V]:
-            print 'incremting'
+            print 'incrementing'
             self.increment_control()
 
         self.camera.update(delta_time)

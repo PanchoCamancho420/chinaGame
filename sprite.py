@@ -97,7 +97,7 @@ class Sprite(object):
         x, y, z = self.shape.get_xyz(self.xy[0], self.xy[1])
         glPushMatrix()
         glTranslatef(x, z, y)
-        glColor3f(1.0, 1.0, 0.3)
+        glColor3f(.7, 1.0, 0.7)
 
         glBegin(GL_POLYGON)
 
@@ -111,39 +111,48 @@ class Sprite(object):
         # Purple
         glBegin(GL_POLYGON)
 
-        glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, self.scale, -self.scale)
-        glVertex3f(self.scale, self.scale, self.scale)
-        glVertex3f(self.scale, -self.scale, self.scale)
+        glVertex3f(2 * self.scale, -self.scale, -self.scale)
+        glVertex3f(2 * self.scale, self.scale, -self.scale)
+        glVertex3f(2 * self.scale, self.scale, self.scale)
+        glVertex3f(2 * self.scale, -self.scale, self.scale)
 
         glEnd()
 
         # Green
         glBegin(GL_POLYGON)
 
-        glVertex3f(-self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, self.scale, self.scale)
-        glVertex3f(-self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, -self.scale, -self.scale)
+        glVertex3f(2 * -self.scale, -self.scale, self.scale)
+        glVertex3f(2 * -self.scale, self.scale, self.scale)
+        glVertex3f(2 * -self.scale, self.scale, -self.scale)
+        glVertex3f(2 * -self.scale, -self.scale, -self.scale)
 
         glEnd()
 
         # Blue
         glBegin(GL_POLYGON)
 
-        glVertex3f(self.scale, self.scale, self.scale)
-        glVertex3f(self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, self.scale, self.scale)
+        glVertex3f(2 * self.scale, self.scale, self.scale)
+        glVertex3f(2 * self.scale, self.scale, -self.scale)
+        glVertex3f(2 * -self.scale, self.scale, -self.scale)
+        glVertex3f(2 * -self.scale, self.scale, self.scale)
 
         glEnd()
 
         # Red
         glBegin(GL_POLYGON)
 
+        glVertex3f(2 * self.scale, -self.scale, -self.scale)
+        glVertex3f(2 * self.scale, -self.scale, self.scale)
+        glVertex3f(2 * -self.scale, -self.scale, self.scale)
+        glVertex3f(2 * -self.scale, -self.scale, -self.scale)
+
+        glEnd()
+
+        glBegin(GL_POLYGON)
+
         glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, -self.scale, self.scale)
+        glVertex3f(self.scale, self.scale, -self.scale)
+        glVertex3f(-self.scale, self.scale, -self.scale)
         glVertex3f(-self.scale, -self.scale, -self.scale)
 
         glEnd()
