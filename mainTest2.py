@@ -94,16 +94,6 @@ class World(pyglet.window.Window):
             sys.exit(0)
         return textures
 
-    def on_text_motion(self, motion):
-        if motion == pyglet.window.key.MOTION_UP:
-            self.sprite.give_gas((0, 1))
-        if motion == pyglet.window.key.MOTION_DOWN:
-            self.sprite.give_gas((0, -1))
-        if motion == pyglet.window.key.MOTION_LEFT:
-            self.sprite.give_gas((1, 0))
-        if motion == pyglet.window.key.MOTION_RIGHT:
-            self.sprite.give_gas((-1, 0))
-
     def reset_control(self):
         for control in self.control_ables:
             control.set_control(False, False)
