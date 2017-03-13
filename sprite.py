@@ -73,10 +73,10 @@ class Sprite(object):
                 self.push_x(-delta_time * self.acceleration)
 
             if self.input_handler.get_pressed()[keymap['left']]:
-                self.push_y(delta_time * self.acceleration)
+                self.push_y(-delta_time * self.acceleration)
 
             if self.input_handler.get_pressed()[keymap['right']]:
-                self.push_y(-delta_time * self.acceleration)
+                self.push_y(delta_time * self.acceleration)
 
         if all(value is False for value in self.input_handler.get_pressed().values()):
             self.last_pressed += delta_time
