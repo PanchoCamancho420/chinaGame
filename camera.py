@@ -100,6 +100,7 @@ class Camera(object):
 
             self.pitch(self.__input_handler.get_dy())
             self.__input_handler.__dy = 0
+        # self.__input_handler.reset_mouse()
 
         if self.keyboard_control is True:
             if self.__input_handler.get_pressed()[self.key_map['forward']]:

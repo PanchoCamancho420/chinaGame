@@ -25,7 +25,15 @@ class InputHandler(object):
         return self.__pressed
 
     def get_dx(self):
-        return self.__dx
+        store = self.__dx
+        self.__dx = 0.0
+        return store
 
     def get_dy(self):
-        return self.__dy
+        store = self.__dy
+        self.__dy = 0.0
+        return store
+
+    def reset_mouse(self):
+        self.__dy = 0.0
+        self.__dx = 0.0
