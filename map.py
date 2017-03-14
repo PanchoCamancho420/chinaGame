@@ -26,5 +26,4 @@ class Map(object):
         self.water.draw()
         self.land.draw()
         for building in self.buildings:
-            x_loc, y_loc, z_loc = self.land.get_xyz(building.x, building.y)
-            building.draw_xyz(x_loc, z_loc, y_loc)
+            building.draw()

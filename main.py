@@ -45,12 +45,12 @@ class World(pyglet.window.Window):
         shape = TerrainShape(seed=12, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
 
-        fort = building.Building(1, 1, .1)
-        fort_2 = building.Building(2, 1, .1)
-        fort_3 = building.Building(1, 2, .2)
-        fort_4 = building.Building(2, 2, .1)
-        fort_outpost = building.Building(-2, -2, .07)
-        fort_king = building.Building(0, 0, .25)
+        fort = building.Building(sand, 1, 1, .1)
+        fort_2 = building.Building(sand, 2, 1, .1)
+        fort_3 = building.Building(sand, 1, 2, .2)
+        fort_4 = building.Building(sand, 2, 2, .1)
+        fort_outpost = building.Building(sand, -2, -2, .07)
+        fort_king = building.Building(sand, 0, 0, .25)
 
         self.map = map.Map(self.textures[1], sand)
         self.map.add_building(fort)

@@ -2,12 +2,20 @@ from pyglet.gl import *
 
 
 class Building(object):
-    def __init__(self, x, y, scale):
+    def __init__(self, shape, x, y, scale):
         self.x = x
         self.y = y
         self.scale = scale
+        self.shape = shape
+        self.x_loc, self.y_loc, self.z_loc = shape.get_xyz(self.x, self.y)
 
-    def draw_xyz(self, x, y, z):
+    def get_center(self):
+        return self.x_loc, self.y_loc, self.y_loc
+
+    def draw(self):
+        self._draw_xyz(self.x_loc, self.z_loc, self.y_loc)
+
+    def _draw_xyz(self, x, y, z):
         glPushMatrix()
 
         glTranslatef(x, y, z)
@@ -52,6 +60,7 @@ class Building(object):
 
         glEnd()
 
+        #bottom
         # Red
         # glBegin(GL_POLYGON)
 

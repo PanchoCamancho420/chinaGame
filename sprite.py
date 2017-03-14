@@ -92,6 +92,9 @@ class Sprite(object):
         # do this because never want mouse control
         return False, key_board
 
+    def get_center(self):
+        return self.shape.get_xyz(self.xy[0], self.xy[1])
+
     def draw(self):
         x, y, z = self.shape.get_xyz(self.xy[0], self.xy[1])
         glPushMatrix()
