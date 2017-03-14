@@ -148,15 +148,6 @@ class World(pyglet.window.Window):
         self.camera.draw()
         self.map.draw()
 
-        glBegin(GL_TRIANGLES)
-
-        glColor3f(1.0, 1.0, 1.0)
-        glVertex3f(0, 0, -1)
-        glVertex3f(.5, 0, -1)
-        glVertex3f(1, -1, -1),
-
-        glEnd()
-
         for drawable in self.draw_ables:
             drawable.draw()
 
