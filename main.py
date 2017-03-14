@@ -109,7 +109,6 @@ class World(pyglet.window.Window):
                          image.get_image_data().get_data('RGBA',
                                                          image.width * 4))
         if len(textures) == 0:
-            print 'Found no textures to load. Exiting'
             sys.exit(0)
         return textures
 
@@ -132,7 +131,6 @@ class World(pyglet.window.Window):
 
     def update(self, delta_time):
         if self.input_handler.get_pressed()[pyglet.window.key.V]:
-            print 'incremting'
             self.increment_control()
 
         self.camera.update(delta_time)
@@ -149,6 +147,15 @@ class World(pyglet.window.Window):
 
         self.camera.draw()
         self.map.draw()
+
+        glBegin(GL_TRIANGLES)
+
+        glColor3f(1.0, 1.0, 1.0)
+        glVertex3f(0, 0, -1)
+        glVertex3f(.5, 0, -1)
+        glVertex3f(1, -1, -1),
+
+        glEnd()
 
         for drawable in self.draw_ables:
             drawable.draw()

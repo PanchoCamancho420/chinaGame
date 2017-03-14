@@ -87,7 +87,6 @@ class Sprite(object):
             self.slow(.1)
 
     def set_control(self, mouse, key_board):
-        print 'called set control sprite', mouse, key_board
         del mouse
         self.keyboard_control = key_board
         # do this because never want mouse control
