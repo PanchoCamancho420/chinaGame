@@ -83,6 +83,8 @@ class World(pyglet.window.Window):
 
         self.input_handler = inputHandler.InputHandler()
         self.push_handlers(self.input_handler)
+        self.c_bumped = self.input_handler.add_bumped(pyglet.window.key.C)
+        self.v_bumped = self.input_handler.add_bumped(pyglet.window.key.V)
 
         self.reset_control()
 
@@ -136,8 +138,10 @@ class World(pyglet.window.Window):
             self.control_ables[self.default_controllable_index].set_control(not mouse, not key_board)
 
     def update(self, delta_time):
-        if self.input_handler.get_pressed()[pyglet.window.key.V]:
+        if self.v_bumped.get_bumped():
             self.increment_control()
+        if self.c_bumped.get_bumped():
+            self.reset_control()
 
         self.camera.update(delta_time)
 
