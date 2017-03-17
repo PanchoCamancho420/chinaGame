@@ -8,6 +8,7 @@ from terrain import Terrain
 from terrainShape import TerrainShape
 import sprite
 import inputHandler
+import arrow
 
 import os
 import sys
@@ -74,6 +75,11 @@ class World(pyglet.window.Window):
         self.control_ables.append(self.sprite)
         self.draw_ables.append(self.sprite)
         self.update_ables.append(self.sprite)
+
+        self.cursor = arrow.Arrow()
+        self.draw_ables.append(self.cursor)
+        self.update_ables.append(self.cursor)
+        self.cursor.point_at(self.sprite)
 
         self.input_handler = inputHandler.InputHandler()
         self.push_handlers(self.input_handler)
@@ -146,7 +152,7 @@ class World(pyglet.window.Window):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.camera.draw()
-        self.map.draw()
+        # self.map.draw()
 
         for drawable in self.draw_ables:
             drawable.draw()

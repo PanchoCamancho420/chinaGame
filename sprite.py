@@ -4,7 +4,7 @@ import inputHandler
 
 class Sprite(object):
 
-    def __init__(self, window, shape, scale=.1, max_velocity=10, xy=(0, 0), xy_velocity=(0.0, 0.0)):
+    def __init__(self, window, shape, scale=.1, max_velocity=5.0, xy=(0, 0), xy_velocity=(0.0, 0.0)):
         self.xy = list(xy)
         self.xy_velocity = list(xy_velocity)
         self.acceleration = 1.0
@@ -83,8 +83,8 @@ class Sprite(object):
         else:
             self.last_pressed = 0.0
 
-        if self.last_pressed >= 1:
-            self.slow(.1)
+        if self.last_pressed >= .25:
+            self.slow(.5)
 
     def set_control(self, mouse, key_board):
         del mouse
