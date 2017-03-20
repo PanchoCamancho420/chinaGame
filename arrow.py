@@ -64,75 +64,90 @@ class Arrow(object):
         glRotatef(self.direction, 0.0, 1.0, 0.0)
         glRotatef(self.angle, 1.0, 0.0, 0.0)
 
-        # glTranslatef(self.x_loc, self.y_loc, self.z_loc)
+        # draws cube dont really want that
+        if False:
+            glColor3f(0.7, 0.3, 0.3)
+            # wierd color z
+            glBegin(GL_POLYGON)
 
-        glColor3f(0.7, 0.3, 0.3)
-        # wierd color z
-        glBegin(GL_POLYGON)
+            glVertex3f(self.scale, -self.scale, self.scale)
+            glVertex3f(self.scale, self.scale, self.scale)
+            glVertex3f(-self.scale, self.scale, self.scale)
+            glVertex3f(-self.scale, -self.scale, self.scale)
 
-        glVertex3f(self.scale, -self.scale, self.scale)
-        glVertex3f(self.scale, self.scale, self.scale)
-        glVertex3f(-self.scale, self.scale, self.scale)
-        glVertex3f(-self.scale, -self.scale, self.scale)
+            glEnd()
 
-        glEnd()
+            # Purple
+            # x
+            glColor3f(1.0, .3, 1.0)
+            glBegin(GL_POLYGON)
 
-        # Purple
-        # x
-        glColor3f(1.0, .3, 1.0)
-        glBegin(GL_POLYGON)
+            glVertex3f(self.scale, -self.scale, -self.scale)
+            glVertex3f(self.scale, self.scale, -self.scale)
+            glVertex3f(self.scale, self.scale, self.scale)
+            glVertex3f(self.scale, -self.scale, self.scale)
 
-        glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, self.scale, -self.scale)
-        glVertex3f(self.scale, self.scale, self.scale)
-        glVertex3f(self.scale, -self.scale, self.scale)
+            glEnd()
 
-        glEnd()
+            # Blue
+            # anti x
+            glColor3f(0.3, 0.3, 1.0)
+            glBegin(GL_POLYGON)
 
-        # Blue
-        # anti x
-        glColor3f(0.3, 0.3, 1.0)
-        glBegin(GL_POLYGON)
+            glVertex3f(-self.scale, -self.scale, self.scale)
+            glVertex3f(-self.scale, self.scale, self.scale)
+            glVertex3f(-self.scale, self.scale, -self.scale)
+            glVertex3f(-self.scale, -self.scale, -self.scale)
 
-        glVertex3f(-self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, self.scale, self.scale)
-        glVertex3f(-self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, -self.scale, -self.scale)
+            glEnd()
 
-        glEnd()
+            # white
+            # top
+            glColor3f(1.0, 1.0, 1.0)
+            glBegin(GL_POLYGON)
 
-        # white
-        # top
-        glColor3f(1.0, 1.0, 1.0)
-        glBegin(GL_POLYGON)
+            glVertex3f(self.scale, self.scale, self.scale)
+            glVertex3f(self.scale, self.scale, -self.scale)
+            glVertex3f(-self.scale, self.scale, -self.scale)
+            glVertex3f(-self.scale, self.scale, self.scale)
 
-        glVertex3f(self.scale, self.scale, self.scale)
-        glVertex3f(self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, self.scale, self.scale)
+            glEnd()
 
-        glEnd()
+            # bottom
+            # black
+            glColor3f(0.0, 0.0, 0.0)
+            glBegin(GL_POLYGON)
 
-        # bottom
-        # black
-        glColor3f(0.0, 0.0, 0.0)
-        glBegin(GL_POLYGON)
+            glVertex3f(self.scale, -self.scale, -self.scale)
+            glVertex3f(self.scale, -self.scale, self.scale)
+            glVertex3f(-self.scale, -self.scale, self.scale)
+            glVertex3f(-self.scale, -self.scale, -self.scale)
 
-        glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, -self.scale, self.scale)
-        glVertex3f(-self.scale, -self.scale, -self.scale)
+            glEnd()
 
-        glEnd()
+            # green anti y
+            glColor3f(0.3, 1.0, 0.3)
+            glBegin(GL_POLYGON)
 
-        # blue anti y
-        glColor3f(0.3, 1.0, 0.3)
-        glBegin(GL_POLYGON)
+            glVertex3f(self.scale, -self.scale, -self.scale)
+            glVertex3f(self.scale, self.scale, -self.scale)
+            glVertex3f(-self.scale, self.scale, -self.scale)
+            glVertex3f(-self.scale, -self.scale, -self.scale)
 
-        glVertex3f(self.scale, -self.scale, -self.scale)
-        glVertex3f(self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, self.scale, -self.scale)
-        glVertex3f(-self.scale, -self.scale, -self.scale)
+            glEnd()
+
+        pointed_ness = 2.5
+
+        glColor3f(0.3, 0.3, .7)
+        glBegin(GL_TRIANGLES)
+
+        glVertex3f(0.0, self.scale / pointed_ness, self.scale)
+        glVertex3f(0.0, 0.0, -self.scale)  # point
+        glVertex3f(0.0, -self.scale / pointed_ness, self.scale)
+
+        glVertex3f(self.scale / pointed_ness, 0.0, self.scale)
+        glVertex3f(0.0, 0.0, -self.scale)  # point
+        glVertex3f(-self.scale / pointed_ness, 0.0, self.scale)
 
         glEnd()
 
