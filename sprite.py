@@ -1,12 +1,14 @@
 from pyglet.gl import *
 import inputHandler
+import math
 
 
 class Sprite(object):
 
-    def __init__(self, window, shape, scale=.1, max_velocity=5.0, xy=(0, 0), xy_velocity=(0.0, 0.0)):
+    def __init__(self, window, shape, scale=.1, max_velocity=5.0, xy=(0, 0)):
         self.xy = list(xy)
-        self.xy_velocity = list(xy_velocity)
+        self.x_velocity = 0.0
+        self.y_velocity = 0.0
         self.acceleration = 1.0
         self.max_velocity = max_velocity
         self.shape = shape
@@ -19,42 +21,49 @@ class Sprite(object):
 
         self.last_pressed = 10000.0
 
-    def give_gas(self, amount_xy):
-        self.xy_velocity[0] += amount_xy[0]
-        if self.xy_velocity[0] > self.max_velocity:
-            self.xy_velocity = self.max_velocity
-        self.xy_velocity[1] += amount_xy[1]
-        if self.xy_velocity[1] > self.max_velocity:
-            self.xy_velocity[1] = self.max_velocity
-
     def push_x(self, amount):
-        self.xy_velocity[0] += amount
-        if self.xy_velocity[0] > self.max_velocity:
-            self.xy_velocity = self.max_velocity
+        new_amount = amount
+
+        # check if its being slowed down
+        if (not ((self.x_velocity >= 0) is (new_amount >= 0))) and not self.x_velocity == 0:
+            self.x_velocity = 0.0
+        else:
+            self.x_velocity += new_amount
+
+        # check if its going to fast
+        if math.fabs(self.x_velocity) > self.max_velocity:
+            self.x_velocity = self.max_velocity
 
     def push_y(self, amount):
-        self.xy_velocity[1] += amount
-        if self.xy_velocity[1] > self.max_velocity:
-            self.xy_velocity[1] = self.max_velocity
+        new_amount = amount
 
-    def slow(self, friction):
-        if self.xy_velocity[0] > friction:
-            self.xy_velocity[0] -= friction
-        elif self.xy_velocity[0] < -friction:
-            self.xy_velocity[0] += friction
+        # check if its being slowed down
+        if (not ((self.y_velocity >= 0) is (new_amount >= 0))) and not self.y_velocity == 0:
+            self.y_velocity = 0.0
         else:
-            self.xy_velocity[0] = 0
+            self.y_velocity += new_amount
 
-        if self.xy_velocity[1] > friction:
-            self.xy_velocity[1] -= friction
-        elif self.xy_velocity[1] < -friction:
-            self.xy_velocity[1] += friction
+        # check if its going to fast
+        if math.fabs(self.y_velocity) > self.max_velocity:
+            self.y_velocity = self.max_velocity
+
+    def slow(self, friction, delta_time):
+        self.x_velocity = self._slow_val(self.x_velocity, friction, delta_time)
+        self.y_velocity = self._slow_val(self.y_velocity, friction, delta_time)
+
+    @staticmethod
+    def _slow_val(speed, friction, delta_time):
+        if speed > friction * delta_time:
+            new_speed = speed - (friction * delta_time)
+        elif speed < -friction * delta_time:
+            new_speed = speed + (friction * delta_time)
         else:
-            self.xy_velocity[1] = 0
+            new_speed = 0
+        return new_speed
 
     def update(self, delta_time):
-        self.xy[0] += delta_time * self.xy_velocity[0]
-        self.xy[1] += delta_time * self.xy_velocity[1]
+        self.xy[0] += delta_time * self.x_velocity
+        self.xy[1] += delta_time * self.y_velocity
 
         if self.keyboard_control is True:
             keymap = {
@@ -78,13 +87,18 @@ class Sprite(object):
             if self.input_handler.get_pressed()[keymap['right']]:
                 self.push_y(delta_time * self.acceleration)
 
+            if self.input_handler.get_pressed()[keymap['down']]:
+                self.x_velocity = 0.0
+                self.y_velocity = 0.0
+                self.xy = [0.0, 0.0]
+
         if all(value is False for value in self.input_handler.get_pressed().values()):
             self.last_pressed += delta_time
         else:
             self.last_pressed = 0.0
 
         if self.last_pressed >= .25:
-            self.slow(.5)
+            self.slow(.25, delta_time)
 
     def set_control(self, mouse, key_board):
         del mouse

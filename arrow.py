@@ -4,9 +4,9 @@ import math
 
 class Arrow(object):
     def __init__(self):
-        self.scale = 1.0
+        self.scale = 0.25
         self.x_loc = 0.0
-        self.y_loc = 3.0
+        self.y_loc = 0.0
         self.z_loc = 0.0
 
         self.direction = 0.0
@@ -27,8 +27,8 @@ class Arrow(object):
             direction += 180.0
         self.direction = direction
 
-        xz_diff = (center[0] - self.x_loc) ** 2 + ((center[1] - self.z_loc) ** 2) ** .5  # euler distance easy
-        y_diff = center[2] - self.z_loc
+        xz_diff = (((center[0] - self.x_loc) ** 2) + ((center[1] - self.z_loc) ** 2)) ** .5  # euler distance easy
+        y_diff = center[2] - self.y_loc
 
         if y_diff == 0:
             y_diff = .0001
