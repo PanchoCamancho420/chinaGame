@@ -85,6 +85,8 @@ class World(pyglet.window.Window):
         self.push_handlers(self.input_handler)
         self.c_bumped = self.input_handler.add_bumped(pyglet.window.key.C)
         self.v_bumped = self.input_handler.add_bumped(pyglet.window.key.V)
+        self.b_bumped = self.input_handler.add_bumped(pyglet.window.key.B)
+        self.b_switch = False
 
         self.reset_control()
 
@@ -142,6 +144,12 @@ class World(pyglet.window.Window):
             self.increment_control()
         if self.c_bumped.get_bumped():
             self.reset_control()
+        if self.b_bumped.get_bumped():
+            self.b_switch = not self.b_switch
+            if self.b_switch:
+                self.camera.point_at(self.sprite)
+            else:
+                self.camera.cancel_pointing()
 
         self.camera.update(delta_time)
 
@@ -160,6 +168,15 @@ class World(pyglet.window.Window):
 
         for drawable in self.draw_ables:
             drawable.draw()
+
+        glColor3f(0.0, 0.0, 0.0)
+        glBegin(GL_TRIANGLES)
+
+        glVertex3f(0.0, 0.0, 0.0)
+        glVertex3f(0.0, -1.0, 0.0)
+        glVertex3f(-1.0, -1.0, 0.0)
+
+        glEnd()
 
     def on_resize(self, width, height):
         self.window_x = width

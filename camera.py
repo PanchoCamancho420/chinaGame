@@ -32,8 +32,8 @@ class Camera(object):
 
         self.__position = list(position)
 
-        self.__yaw = 0.0
-        self.__pitch = 0.0
+        self.__direction = 0.0
+        self.__angle = 0.0
 
         self.__input_handler = inputHandler.InputHandler()
 
@@ -47,42 +47,45 @@ class Camera(object):
         self.keyboard_control = False
         self.mouse_control = False
 
+        self.direction_getter = None
+        self.is_pointing = False
+
     def yaw(self, yaw):
         """Turn above x-axis"""
-        self.__yaw += yaw * self.mouse_sensitivity
+        self.__direction += yaw * self.mouse_sensitivity
         # print str(self.__yaw) + ' <yaw'
 
     def pitch(self, pitch):
         """Turn above y-axis"""
-        self.__pitch += pitch * self.mouse_sensitivity * ((-1) if self.y_inv else 1)
-        if self.__pitch < -90.0:
-            self.__pitch = -90
-        if self.__pitch > 90:
-            self.__pitch = 90
+        self.__angle += pitch * self.mouse_sensitivity * ((-1) if self.y_inv else 1)
+        if self.__angle < -90.0:
+            self.__angle = -90
+        if self.__angle > 90:
+            self.__angle = 90
         # print str(self.__pitch) + ' <pitch'
 
     def move_forward(self, distance):
         """Move forward on distance"""
-        self.__position[0] -= distance * math.sin(math.radians(self.__yaw))
-        self.__position[2] += distance * math.cos(math.radians(self.__yaw))
+        self.__position[0] -= distance * math.sin(math.radians(self.__direction))
+        self.__position[2] += distance * math.cos(math.radians(self.__direction))
 
     def move_backward(self, distance):
         """Move backward on distance"""
-        self.__position[0] += distance * math.sin(math.radians(self.__yaw))
-        self.__position[2] -= distance * math.cos(math.radians(self.__yaw))
+        self.__position[0] += distance * math.sin(math.radians(self.__direction))
+        self.__position[2] -= distance * math.cos(math.radians(self.__direction))
 
         # watch this
         # print str(self.__position) + ' <cam'
 
     def move_left(self, distance):
         """Move left on distance"""
-        self.__position[0] -= distance * math.sin(math.radians(self.__yaw - 90))
-        self.__position[2] += distance * math.cos(math.radians(self.__yaw - 90))
+        self.__position[0] -= distance * math.sin(math.radians(self.__direction - 90))
+        self.__position[2] += distance * math.cos(math.radians(self.__direction - 90))
 
     def move_right(self, distance):
         """Move right on distance"""
-        self.__position[0] -= distance * math.sin(math.radians(self.__yaw + 90))
-        self.__position[2] += distance * math.cos(math.radians(self.__yaw + 90))
+        self.__position[0] -= distance * math.sin(math.radians(self.__direction + 90))
+        self.__position[2] += distance * math.cos(math.radians(self.__direction + 90))
 
     def move_up(self, distance):
         """Move up on distance"""
@@ -121,14 +124,54 @@ class Camera(object):
             if self.__input_handler.get_pressed()[self.key_map['down']]:
                 self.move_down(delta_time * self.movement_speed)
 
+        if self.is_pointing:
+            self.calc_direction()
+
     def set_control(self, mouse, key_board):
         self.mouse_control = mouse
         self.keyboard_control = key_board
         # do this because wants both
         return not mouse, not key_board
 
+    def point_at(self, direction):
+        self.direction_getter = direction
+        self.is_pointing = True
+
+    def cancel_pointing(self):
+        self.direction_getter = None
+        self.is_pointing = False
+
+    def calc_direction(self):
+        center = self.direction_getter.get_center()
+        x_diff = -(-self.__position[0] - center[0])  # x
+        z_diff = -(-self.__position[2] - center[1])  # z
+
+        if z_diff == 0:
+            z_diff = .0001
+        direction = math.degrees(math.atan(z_diff / x_diff))
+        direction += 90.0
+        if x_diff < 0:
+            direction += 180.0
+        self.__direction = direction
+
+        # euler distance
+        xz_diff = (((-center[0] - self.__position[0]) ** 2) + ((-center[1] - self.__position[2]) ** 2)) ** .5
+        y_diff = -(-center[2] - self.__position[1])
+
+        print xz_diff, y_diff
+
+        if y_diff == 0:
+            y_diff = .0001
+        if xz_diff == 0:
+            xz_diff = .0001
+        angle = math.degrees(math.atan(y_diff / xz_diff))
+        # if y_diff > 0:
+        #     angle += 180.0
+
+        self.__angle = -angle
+
     def draw(self):
         """Apply transform"""
-        pyglet.gl.glRotatef(self.__pitch, 1.0, 0.0, 0.0)
-        pyglet.gl.glRotatef(self.__yaw, 0.0, 1.0, 0.0)
+        pyglet.gl.glRotatef(self.__angle, 1.0, 0.0, 0.0)
+        pyglet.gl.glRotatef(self.__direction, 0.0, 1.0, 0.0)
         pyglet.gl.glTranslatef(*self.__position)

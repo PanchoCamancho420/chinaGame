@@ -5,14 +5,16 @@ import math
 
 class Sprite(object):
 
-    def __init__(self, window, shape, scale=.1, max_velocity=5.0, xy=(0, 0)):
+    def __init__(self, window, shape, color=(0.0, 1.0, 0.0), scale=.1, max_velocity=5.0, xy=(0, 0)):
         self.xy = list(xy)
         self.x_velocity = 0.0
         self.y_velocity = 0.0
         self.acceleration = 1.0
         self.max_velocity = max_velocity
         self.shape = shape
+
         self.scale = scale
+        self.color = color
 
         self.input_handler = inputHandler.InputHandler()
         window.push_handlers(self.input_handler)
@@ -113,7 +115,7 @@ class Sprite(object):
         x, y, z = self.shape.get_xyz(self.xy[0], self.xy[1])
         glPushMatrix()
         glTranslatef(x, z, y)
-        glColor3f(.7, 1.0, 0.7)
+        glColor3f(*self.color)
 
         glBegin(GL_POLYGON)
 
