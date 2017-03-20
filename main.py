@@ -53,6 +53,8 @@ class World(pyglet.window.Window):
         fort_outpost = building.Building(sand, -2, -2, .07)
         fort_king = building.Building(sand, 0, 0, .25)
 
+        self.turret = building.Turret(sand, -.5, -.5, .25)
+
         self.map = map.Map(self.textures[1], sand)
         self.map.add_building(fort)
         self.map.add_building(fort_2)
@@ -75,6 +77,8 @@ class World(pyglet.window.Window):
         self.control_ables.append(self.sprite)
         self.draw_ables.append(self.sprite)
         self.update_ables.append(self.sprite)
+
+        self.turret.point_at(self.sprite)
 
         self.cursor = arrow.Arrow()
         self.draw_ables.append(self.cursor)
@@ -153,6 +157,7 @@ class World(pyglet.window.Window):
 
         self.camera.update(delta_time)
 
+        self.turret.update(delta_time)
         for update_able in self.update_ables:
             update_able.update(delta_time)
 
@@ -165,6 +170,7 @@ class World(pyglet.window.Window):
 
         self.camera.draw()
         # self.map.draw()
+        self.turret.draw()
 
         for drawable in self.draw_ables:
             drawable.draw()
