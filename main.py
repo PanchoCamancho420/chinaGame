@@ -169,15 +169,6 @@ class World(pyglet.window.Window):
         for drawable in self.draw_ables:
             drawable.draw()
 
-        glColor3f(0.0, 0.0, 0.0)
-        glBegin(GL_TRIANGLES)
-
-        glVertex3f(0.0, 0.0, 0.0)
-        glVertex3f(0.0, -1.0, 0.0)
-        glVertex3f(-1.0, -1.0, 0.0)
-
-        glEnd()
-
     def on_resize(self, width, height):
         self.window_x = width
         self.window_y = height

@@ -158,8 +158,6 @@ class Camera(object):
         xz_diff = (((-center[0] - self.__position[0]) ** 2) + ((-center[1] - self.__position[2]) ** 2)) ** .5
         y_diff = -(-center[2] - self.__position[1])
 
-        print xz_diff, y_diff
-
         if y_diff == 0:
             y_diff = .0001
         if xz_diff == 0:
