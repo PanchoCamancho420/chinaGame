@@ -16,8 +16,8 @@ class Map(object):
 
     def update(self, delta_time):
         """change the way the water and towers look"""
-        self.water.update()
-        self.land.update()
+        self.water.update(delta_time)
+        self.land.update(delta_time)
         for building in self.buildings:
             building.update(delta_time=delta_time)
 

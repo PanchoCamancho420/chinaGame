@@ -46,6 +46,10 @@ class World(pyglet.window.Window):
         shape = TerrainShape(seed=12, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
 
+        self.draw_ables = []
+        self.update_ables = []
+        self.control_ables = []
+
         fort = building.Building(sand, 1, 1, .1)
         fort_2 = building.Building(sand, 2, 1, .1)
         fort_3 = building.Building(sand, 1, 2, .2)
@@ -56,16 +60,14 @@ class World(pyglet.window.Window):
         self.turret = building.Turret(sand, -.5, -.5, .25)
 
         self.map = map.Map(self.textures[1], sand)
+        self.update_ables.append(self.map)
         self.map.add_building(fort)
         self.map.add_building(fort_2)
         self.map.add_building(fort_3)
         self.map.add_building(fort_4)
         self.map.add_building(fort_outpost)
         self.map.add_building(fort_king)
-
-        self.draw_ables = []
-        self.update_ables = []
-        self.control_ables = []
+        self.map.add_building(self.turret)
 
         self.control_able_index = 0
         self.default_controllable_index = 0
@@ -156,8 +158,6 @@ class World(pyglet.window.Window):
                 self.camera.cancel_pointing()
 
         self.camera.update(delta_time)
-
-        self.turret.update(delta_time)
         for update_able in self.update_ables:
             update_able.update(delta_time)
 
@@ -169,8 +169,7 @@ class World(pyglet.window.Window):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.camera.draw()
-        # self.map.draw()
-        self.turret.draw()
+        self.map.draw()
 
         for drawable in self.draw_ables:
             drawable.draw()

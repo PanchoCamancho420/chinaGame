@@ -123,6 +123,9 @@ class Terrain(object):
     def draw(self):
         self._draw()
 
+    def update(self, delta_time):
+        pass
+
     # ~~~~~~~~~~ DRAWING FUNCTION ~~~~~~~~~~~~~~~~~~~~~~~~
     def _draw(self):
 

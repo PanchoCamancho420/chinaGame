@@ -18,7 +18,7 @@ class Water(object):
         self.texture = texture
         self.texture_scale = texture_scale
 
-    def update(self):
+    def update(self, delta_time):
         pass
 
     def draw(self):

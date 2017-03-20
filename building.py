@@ -11,7 +11,10 @@ class Building(object):
         self.x_loc, self.y_loc, self.z_loc = shape.get_xyz(self.x, self.y)
 
     def get_center(self):
-        return self.x_loc, self.y_loc, self.y_loc
+        return self.x_loc, self.y_loc, self.z_loc
+
+    def update(self, delta_time):
+        pass
 
     def draw(self):
         self._draw_xyz(self.x_loc, self.z_loc, self.y_loc)
@@ -88,6 +91,10 @@ class Turret(Building):
     def __init__(self, shape, x, y, scale, color=(0.3, 0.3, 0.3)):
         self.color = color
         Building.__init__(self, shape=shape, x=x, y=y, scale=scale)
+        # need to swap some values
+        temp = self.y_loc
+        self.y_loc = self.z_loc
+        self.z_loc = temp
 
         self.arrow = arrow.Arrow(location=(self.x_loc, self.y_loc+self.scale, self.z_loc), color=(1.0, 0.0, 0.0),
                                  scale=self.scale / 2)
