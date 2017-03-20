@@ -89,7 +89,8 @@ class Turret(Building):
         self.color = color
         Building.__init__(self, shape=shape, x=x, y=y, scale=scale)
 
-        self.arrow = arrow.Arrow(location=(0.0, self.scale, 0.0), color=(1.0, 0.0, 0.0), scale=self.scale / 2)
+        self.arrow = arrow.Arrow(location=(self.x_loc, self.y_loc+self.scale, self.z_loc), color=(1.0, 0.0, 0.0),
+                                 scale=self.scale / 2)
 
     def point_at(self, direction):
         self.arrow.point_at(direction)
@@ -101,13 +102,12 @@ class Turret(Building):
         self.arrow.update(delta_time)
 
     def draw(self):
+        self.arrow.draw()
 
         glPushMatrix()
 
         glTranslatef(self.x_loc, self.y_loc, self.z_loc)
         # print self.x_loc, self.y_loc, self.z_loc
-
-        self.arrow.draw()
 
         glColor3f(*self.color)
 
