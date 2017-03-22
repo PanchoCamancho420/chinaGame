@@ -44,7 +44,10 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
-        shape = TerrainShape(seed=12, island_location=(0, 0), size=4, height=.5)
+        import random
+        seed = random.randrange(-1000, 1000)
+        print 'seed ', seed
+        shape = TerrainShape(seed=seed, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
         self.sand = sand
 
@@ -165,9 +168,14 @@ class World(pyglet.window.Window):
                 self.camera.cancel_pointing()
         if self.dot_bumped.get_bumped():
             x, y = self.selector.get_mat_selection()
-            import building
-            insert_building = building.Building(scale=.2, shape=self.sand, x=x, y=y)
-            self.map.add_building(insert_building)
+            if self.map.try_delete(x, y):
+                pass
+            else:
+                import building
+                import random
+                scale = random.uniform(.05, .15)
+                insert_building = building.Building(scale=scale, shape=self.sand, x=x, y=y)
+                self.map.add_building(insert_building)
 
         self.camera.update(delta_time)
         for update_able in self.update_ables:
@@ -197,6 +205,6 @@ class World(pyglet.window.Window):
 
 
 if __name__ == "__main__":
-    window = World(width=800, height=600, caption='terrian Explorer', resizable=True, fullscreen=False)
+    window = World(width=800, height=600, caption='MAKE CHINA GREAT AGAIN', resizable=True, fullscreen=False)
     window.set_exclusive_mouse(True)
     pyglet.app.run()

@@ -1,4 +1,5 @@
 import water
+import building as building_class
 
 
 class Map(object):
@@ -12,7 +13,16 @@ class Map(object):
                 self.buildings.append(building)
 
     def add_building(self, building):
+        # type: (building_class.Building) -> None
         self.buildings.append(building)
+
+    def try_delete(self, x, y):
+        for i in range(len(self.buildings)):
+            building = self.buildings[i]
+            if building.x == x and building.y == y:
+                del self.buildings[i]
+                return True
+        return False
 
     def update(self, delta_time):
         """change the way the water and towers look"""
