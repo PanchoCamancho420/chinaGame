@@ -30,6 +30,14 @@ class Selector(object):
 
         self.update(0.0)
 
+    def get_mat_selection(self):
+        return self.mat_x, self.mat_y
+
+    def get_center(self):
+        x_loc, z_loc, y_loc = self.shape.get_xyz(self.mat_x, self.mat_y)
+        y_loc += self.height + (self.z_bob * self.z_bob_distance)
+        return x_loc, y_loc, z_loc
+
     def update(self, delta_time):
         self.total_time += delta_time
         self.z_bob = math.cos(self.total_time * self.z_bob_speed)

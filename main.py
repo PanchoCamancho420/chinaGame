@@ -46,6 +46,7 @@ class World(pyglet.window.Window):
 
         shape = TerrainShape(seed=12, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
+        self.sand = sand
 
         self.draw_ables = []
         self.update_ables = []
@@ -98,6 +99,7 @@ class World(pyglet.window.Window):
         self.v_bumped = self.input_handler.add_bumped(pyglet.window.key.V)
         self.b_bumped = self.input_handler.add_bumped(pyglet.window.key.B)
         self.b_switch = False
+        self.dot_bumped = self.input_handler.add_bumped(pyglet.window.key.PERIOD)
 
         self.reset_control()
 
@@ -161,6 +163,11 @@ class World(pyglet.window.Window):
                 self.camera.point_at(self.sprite)
             else:
                 self.camera.cancel_pointing()
+        if self.dot_bumped.get_bumped():
+            x, y = self.selector.get_mat_selection()
+            import building
+            insert_building = building.Building(scale=.2, shape=self.sand, x=x, y=y)
+            self.map.add_building(insert_building)
 
         self.camera.update(delta_time)
         for update_able in self.update_ables:
