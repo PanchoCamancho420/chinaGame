@@ -62,7 +62,7 @@ class World(pyglet.window.Window):
         fort_outpost = building.Building(sand, -2, -2, .07)
         fort_king = building.Building(sand, 0, 0, .25)
 
-        self.turret = building.Turret(sand, -.5, -.5, .25)
+        self.turret = building.Turret(sand, -1, -1, .25)
 
         self.map = map.Map(self.textures[1], sand)
         self.update_ables.append(self.map)
@@ -102,7 +102,8 @@ class World(pyglet.window.Window):
         self.v_bumped = self.input_handler.add_bumped(pyglet.window.key.V)
         self.b_bumped = self.input_handler.add_bumped(pyglet.window.key.B)
         self.b_switch = False
-        self.dot_bumped = self.input_handler.add_bumped(pyglet.window.key.PERIOD)
+        self.period_bumped = self.input_handler.add_bumped(pyglet.window.key.PERIOD)
+        self.comma_bumped = self.input_handler.add_bumped(pyglet.window.key.COMMA)
 
         self.reset_control()
 
@@ -166,7 +167,8 @@ class World(pyglet.window.Window):
                 self.camera.point_at(self.sprite)
             else:
                 self.camera.cancel_pointing()
-        if self.dot_bumped.get_bumped():
+
+        if self.period_bumped.get_bumped():
             x, y = self.selector.get_mat_selection()
             if self.map.try_delete(x, y):
                 pass
@@ -175,6 +177,17 @@ class World(pyglet.window.Window):
                 import random
                 scale = random.uniform(.05, .15)
                 insert_building = building.Building(scale=scale, shape=self.sand, x=x, y=y)
+                self.map.add_building(insert_building)
+
+        if self.comma_bumped.get_bumped():
+            x, y = self.selector.get_mat_selection()
+            if self.map.try_delete(x, y):
+                pass
+            else:
+                import building
+                import random
+                scale = random.uniform(.2, .35)
+                insert_building = building.Turret(self.sand, x, y, scale)
                 self.map.add_building(insert_building)
 
         self.camera.update(delta_time)
