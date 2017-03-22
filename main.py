@@ -8,7 +8,7 @@ from terrain import Terrain
 from terrainShape import TerrainShape
 import sprite
 import inputHandler
-import arrow
+import pointer
 
 import os
 import sys
@@ -82,7 +82,7 @@ class World(pyglet.window.Window):
 
         self.turret.point_at(self.sprite)
 
-        self.cursor = arrow.Arrow()
+        self.cursor = pointer.Arrow()
         self.draw_ables.append(self.cursor)
         self.update_ables.append(self.cursor)
         self.cursor.point_at(self.sprite)

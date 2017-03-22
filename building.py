@@ -1,5 +1,5 @@
 from pyglet.gl import *
-import arrow
+import pointer
 
 
 class Building(object):
@@ -64,7 +64,7 @@ class Building(object):
 
         glEnd()
 
-        #bottom
+        # bottom
         # Red
         # glBegin(GL_POLYGON)
 
@@ -96,8 +96,8 @@ class Turret(Building):
         self.y_loc = self.z_loc
         self.z_loc = temp
 
-        self.arrow = arrow.Arrow(location=(self.x_loc, self.y_loc+self.scale, self.z_loc), color=(1.0, 0.0, 0.0),
-                                 scale=self.scale / 2)
+        self.arrow = pointer.Laser(location=(self.x_loc, self.y_loc + self.scale, self.z_loc),
+                                   scale=self.scale / 2)
 
     def point_at(self, direction):
         self.arrow.point_at(direction)
