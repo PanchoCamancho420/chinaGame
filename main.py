@@ -44,6 +44,10 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
+        self.label = pyglet.text.Label('kai', font_name='Arial', font_size=18,
+                                       x=10, y=self.height - 10, anchor_x='left', anchor_y='top',
+                                       color=(0, 0, 0, 255))
+
         import random
         seed = random.randrange(-1000, 1000)
         print 'seed ', seed
@@ -103,6 +107,7 @@ class World(pyglet.window.Window):
         self.c_bumped = self.input_handler.add_bumped(pyglet.window.key.C)
         self.v_bumped = self.input_handler.add_bumped(pyglet.window.key.V)
         self.b_bumped = self.input_handler.add_bumped(pyglet.window.key.B)
+        self.n_bumped = self.input_handler.add_bumped(pyglet.window.key.N)
         self.b_switch = False
         self.period_bumped = self.input_handler.add_bumped(pyglet.window.key.PERIOD)
         self.comma_bumped = self.input_handler.add_bumped(pyglet.window.key.COMMA)
@@ -158,6 +163,29 @@ class World(pyglet.window.Window):
         if not self.control_able_index == self.default_controllable_index:
             self.control_ables[self.default_controllable_index].set_control(not mouse, not key_board)
 
+    def set_3d(self):
+        """ Configure OpenGL to draw in 3d.
+        """
+        width, height = self.get_size()
+        glEnable(GL_DEPTH_TEST)
+        glViewport(0, 0, width, height)
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        gluPerspective(65.0, width / float(height), 0.1, 60.0)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+
+    def draw_hud(self):
+        width, height = self.get_size()
+        glDisable(GL_DEPTH_TEST)
+        glViewport(0, 0, width, height)
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        glOrtho(0, width, 0, height, -1, 1)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        self.label.draw()
+
     def update(self, delta_time):
         if self.v_bumped.get_bumped():
             self.increment_control()
@@ -169,6 +197,12 @@ class World(pyglet.window.Window):
                 self.camera.point_at(self.sprite)
             else:
                 self.camera.cancel_pointing()
+        if self.n_bumped.get_bumped():
+            insert_sprite = sprite.Sprite(self, self.map.land)
+            self.control_ables.append(insert_sprite)
+            self.draw_ables.append(insert_sprite)
+            self.update_ables.append(insert_sprite)
+            self.point_ables.append(insert_sprite)
 
         if self.period_bumped.get_bumped():
             x, y = self.selector.get_mat_selection()
@@ -198,6 +232,8 @@ class World(pyglet.window.Window):
 
     def on_draw(self):
 
+        self.set_3d()
+
         self.draw_number += 1
 
         glLoadIdentity()
@@ -208,6 +244,8 @@ class World(pyglet.window.Window):
 
         for drawable in self.draw_ables:
             drawable.draw()
+
+        self.draw_hud()
 
     def on_resize(self, width, height):
         self.window_x = width
@@ -220,6 +258,6 @@ class World(pyglet.window.Window):
 
 
 if __name__ == "__main__":
-    window = World(width=800, height=600, caption='MAKE CHINA GREAT AGAIN', resizable=True, fullscreen=False)
+    window = World(width=1080, height=720, caption='MAKE CHINA GREAT AGAIN', resizable=True, fullscreen=False)
     window.set_exclusive_mouse(True)
     pyglet.app.run()
