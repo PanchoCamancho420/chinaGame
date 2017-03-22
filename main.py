@@ -44,10 +44,6 @@ class World(pyglet.window.Window):
         self.file_path = resource_path('textureImages')
         self.textures = self.load_textures()
 
-        self.label = pyglet.text.Label('kai', font_name='Arial', font_size=18,
-                                       x=10, y=self.height - 10, anchor_x='left', anchor_y='top',
-                                       color=(0, 0, 0, 255))
-
         import random
         seed = random.randrange(-1000, 1000)
         print 'seed ', seed
@@ -59,6 +55,12 @@ class World(pyglet.window.Window):
         self.update_ables = []
         self.control_ables = []
         self.point_ables = []
+        self.draw_able_2d = []
+
+        label = pyglet.text.Label('cool', font_name='Arial', font_size=24,
+                                  x=10, y=self.height - 10, anchor_x='left', anchor_y='top',
+                                  color=(0, 0, 0, 255))
+        self.draw_able_2d.append(label)
 
         fort = building.Building(sand, 1, 1, .1)
         fort_2 = building.Building(sand, 2, 1, .1)
@@ -175,7 +177,7 @@ class World(pyglet.window.Window):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
-    def draw_hud(self):
+    def set_2d(self):
         width, height = self.get_size()
         glDisable(GL_DEPTH_TEST)
         glViewport(0, 0, width, height)
@@ -184,7 +186,6 @@ class World(pyglet.window.Window):
         glOrtho(0, width, 0, height, -1, 1)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        self.label.draw()
 
     def update(self, delta_time):
         if self.v_bumped.get_bumped():
@@ -245,7 +246,10 @@ class World(pyglet.window.Window):
         for drawable in self.draw_ables:
             drawable.draw()
 
-        self.draw_hud()
+        self.set_2d()
+
+        for drawable_2d in self.draw_able_2d:
+            drawable_2d.draw()
 
     def on_resize(self, width, height):
         self.window_x = width
