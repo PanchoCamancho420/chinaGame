@@ -9,6 +9,7 @@ from terrainShape import TerrainShape
 import sprite
 import inputHandler
 import pointer
+import selector
 
 import os
 import sys
@@ -86,6 +87,10 @@ class World(pyglet.window.Window):
         self.draw_ables.append(self.cursor)
         self.update_ables.append(self.cursor)
         self.cursor.point_at(self.sprite)
+
+        self.selector = selector.Selector(shape=sand, window=self)
+        self.draw_ables.append(self.selector)
+        self.update_ables.append(self.selector)
 
         self.input_handler = inputHandler.InputHandler()
         self.push_handlers(self.input_handler)
