@@ -100,7 +100,7 @@ class Sprite(object):
             self.last_pressed = 0.0
 
         if self.last_pressed >= .25:
-            self.slow(.25, delta_time)
+            self.slow(2.0, delta_time)
 
     def set_control(self, mouse, key_board):
         del mouse

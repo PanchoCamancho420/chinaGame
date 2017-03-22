@@ -171,7 +171,7 @@ class Laser(Arrow):
         self.reload = 0.0
         self.fire_time = 0.2
         self.rotate_speed = 1.0
-        self.aim_speed = 20.0
+        self.aim_speed = 30.0
         self.detection_distance = 4.0
         self.firing_distance = 1.0
         self.color = normal_color
@@ -182,11 +182,10 @@ class Laser(Arrow):
     def aim(self, delta_time):
         self.color = self.aiming_color
         target_direction, target_angle = self.calc_direction()
+        target_direction += 90.0
 
         normal_distance = math.fabs(target_direction - self._direction)
         should_loop = normal_distance >= 180
-
-        print 'amin', should_loop, target_direction, self._direction
 
         if math.fabs(self._direction - target_direction) <= delta_time * self.aim_speed:
             self._direction = target_direction
@@ -202,6 +201,14 @@ class Laser(Arrow):
                 else:
                     self._direction -= self.aim_speed * delta_time
 
+        if math.fabs(self._angle - target_angle) <= delta_time * self.aim_speed:
+            self._angle = target_angle
+        else:
+            if target_angle < self._angle:
+                self._angle -= delta_time * self.aim_speed
+            else:
+                self._angle += delta_time * self.aim_speed
+
     def in_range(self, max_range):
         center = self._direction_getter.get_center()
         distance = (((self._x_loc - center[0]) ** 2) +
@@ -216,3 +223,100 @@ class Laser(Arrow):
             else:
                 self.color = self.normal_color
         self._direction %= 360.0
+
+    def draw(self):
+        glPushMatrix()
+
+        glTranslatef(self._x_loc, self._y_loc, self._z_loc)
+
+        glRotatef(self._direction - 90.0, 0.0, 1.0, 0.0)
+        glRotatef(self._angle, 1.0, 0.0, 0.0)
+
+        # draws cube don't really want that
+        if False:
+            glColor3f(0.7, 0.3, 0.3)
+            # wierd color z
+            glBegin(GL_POLYGON)
+
+            glVertex3f(self._scale, -self._scale, self._scale)
+            glVertex3f(self._scale, self._scale, self._scale)
+            glVertex3f(-self._scale, self._scale, self._scale)
+            glVertex3f(-self._scale, -self._scale, self._scale)
+
+            glEnd()
+
+            # Purple
+            # x
+            glColor3f(1.0, .3, 1.0)
+            glBegin(GL_POLYGON)
+
+            glVertex3f(self._scale, -self._scale, -self._scale)
+            glVertex3f(self._scale, self._scale, -self._scale)
+            glVertex3f(self._scale, self._scale, self._scale)
+            glVertex3f(self._scale, -self._scale, self._scale)
+
+            glEnd()
+
+            # Blue
+            # anti x
+            glColor3f(0.3, 0.3, 1.0)
+            glBegin(GL_POLYGON)
+
+            glVertex3f(-self._scale, -self._scale, self._scale)
+            glVertex3f(-self._scale, self._scale, self._scale)
+            glVertex3f(-self._scale, self._scale, -self._scale)
+            glVertex3f(-self._scale, -self._scale, -self._scale)
+
+            glEnd()
+
+            # white
+            # top
+            glColor3f(1.0, 1.0, 1.0)
+            glBegin(GL_POLYGON)
+
+            glVertex3f(self._scale, self._scale, self._scale)
+            glVertex3f(self._scale, self._scale, -self._scale)
+            glVertex3f(-self._scale, self._scale, -self._scale)
+            glVertex3f(-self._scale, self._scale, self._scale)
+
+            glEnd()
+
+            # bottom
+            # black
+            glColor3f(0.0, 0.0, 0.0)
+            glBegin(GL_POLYGON)
+
+            glVertex3f(self._scale, -self._scale, -self._scale)
+            glVertex3f(self._scale, -self._scale, self._scale)
+            glVertex3f(-self._scale, -self._scale, self._scale)
+            glVertex3f(-self._scale, -self._scale, -self._scale)
+
+            glEnd()
+
+            # green anti y
+            glColor3f(0.3, 1.0, 0.3)
+            glBegin(GL_POLYGON)
+
+            glVertex3f(self._scale, -self._scale, -self._scale)
+            glVertex3f(self._scale, self._scale, -self._scale)
+            glVertex3f(-self._scale, self._scale, -self._scale)
+            glVertex3f(-self._scale, -self._scale, -self._scale)
+
+            glEnd()
+
+        pointed_ness = 2.5
+
+        glColor3f(*self.color)
+        glBegin(GL_TRIANGLES)
+
+        glVertex3f(0.0, self._scale / pointed_ness, self._scale)
+        glVertex3f(0.0, 0.0, -self._scale)  # point
+        glVertex3f(0.0, -self._scale / pointed_ness, self._scale)
+
+        glVertex3f(self._scale / pointed_ness, 0.0, self._scale)
+        glVertex3f(0.0, 0.0, -self._scale)  # point
+        glVertex3f(-self._scale / pointed_ness, 0.0, self._scale)
+
+        glEnd()
+
+        glPopMatrix()
