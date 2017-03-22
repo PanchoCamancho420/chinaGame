@@ -54,6 +54,7 @@ class World(pyglet.window.Window):
         self.draw_ables = []
         self.update_ables = []
         self.control_ables = []
+        self.point_ables = []
 
         fort = building.Building(sand, 1, 1, .1)
         fort_2 = building.Building(sand, 2, 1, .1)
@@ -84,6 +85,7 @@ class World(pyglet.window.Window):
         self.control_ables.append(self.sprite)
         self.draw_ables.append(self.sprite)
         self.update_ables.append(self.sprite)
+        self.point_ables.append(self.sprite)
 
         self.turret.point_at(self.sprite)
 
@@ -187,7 +189,7 @@ class World(pyglet.window.Window):
                 import building
                 import random
                 scale = random.uniform(.2, .35)
-                insert_building = building.Turret(self.sand, x, y, scale)
+                insert_building = building.Turret(self.sand, x, y, scale, pointer_pointer=self.point_ables)
                 self.map.add_building(insert_building)
 
         self.camera.update(delta_time)

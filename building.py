@@ -1,5 +1,6 @@
 from pyglet.gl import *
 import pointer
+import terrain
 
 
 class Building(object):
@@ -88,13 +89,16 @@ class Building(object):
 
 
 class Turret(Building):
-    def __init__(self, shape, x, y, scale, color=(0.3, 0.3, 0.3)):
+    def __init__(self, shape, x, y, scale, color=(0.3, 0.3, 0.3), pointer_pointer=None):
+        # type: (terrain.Terrain, int, int, float, tuple, list) -> None
         self.color = color
         Building.__init__(self, shape=shape, x=x, y=y, scale=scale)
         # need to swap some values
         temp = self.y_loc
         self.y_loc = self.z_loc
         self.z_loc = temp
+
+        self.pointer_pointer = pointer_pointer
 
         self.arrow = pointer.Laser(location=(self.x_loc, self.y_loc + self.scale, self.z_loc),
                                    scale=self.scale / 2)
@@ -106,6 +110,23 @@ class Turret(Building):
         self.arrow.cancel_pointing()
 
     def update(self, delta_time):
+        if self.pointer_pointer:
+            min_index = 0
+            center = self.pointer_pointer[min_index].get_center()
+            min_distance = (((self.x_loc - center[0]) ** 2) +
+                            ((self.y_loc - center[2]) ** 2) +
+                            ((self.z_loc - center[1]) ** 2)) ** 0.5
+
+            for i in range(len(self.pointer_pointer)):
+                center = self.pointer_pointer[i].get_center()
+                distance = (((self.x_loc - center[0]) ** 2) +
+                            ((self.y_loc - center[2]) ** 2) +
+                            ((self.z_loc - center[1]) ** 2)) ** 0.5
+                if distance < min_distance:
+                    min_index = i
+                    min_distance = distance
+            self.arrow.point_at(self.pointer_pointer[min_index])
+
         self.arrow.update(delta_time)
 
     def draw(self):
