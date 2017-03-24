@@ -4,12 +4,12 @@ from pyglet.gl import *
 class Sky(object):
     # self, x, y, z, x_size, y_size, texture, texture_scale=1.0
     def __init__(self, terrian, texture, texture_scale=1.0):
-        self.size = 20
+        self.size = 30
 
         # x, y = terrian.convert_xy_to_location(shape_x, shape_y)
 
         self.x_skew = terrian.xyz[0]
-        self.y_skew = terrian.xyz[1] + 2.0
+        self.y_skew = terrian.xyz[1] + 11.0
         self.z_skew = terrian.xyz[2]
 
         self.texture = texture

@@ -82,7 +82,7 @@ class World(pyglet.window.Window):
         self.map.add_building(fort_king)
         self.map.add_building(self.turret)
 
-        self.sky = sky.Sky(self.sand, self.textures[3])
+        self.sky = sky.Sky(self.sand, self.textures[4])
         self.draw_ables.append(self.sky)
 
         self.control_able_index = 0
