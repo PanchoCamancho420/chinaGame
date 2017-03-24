@@ -59,9 +59,8 @@ class World(pyglet.window.Window):
 
         self.loading = loading.Fact(self)
         self.update_ables.append(self.loading)
-        # self.draw_able_2d.append(self.loading)
-        # self.update_ables.append(self.loading)
-        self.laoding_time = 5.0
+        self.loading_time_total = 10.0
+        self.loading_time = 0.0
 
         fort = building.Building(sand, 1, 1, .1)
         fort_2 = building.Building(sand, 2, 1, .1)
@@ -190,8 +189,8 @@ class World(pyglet.window.Window):
 
     def update(self, delta_time):
 
-        if self.laoding_time >= 0.0:
-            self.laoding_time -= delta_time
+        if self.loading_time <= self.loading_time_total:
+            self.loading_time += delta_time
             self.loading.update(delta_time)
             return
 
@@ -240,7 +239,7 @@ class World(pyglet.window.Window):
 
     def on_draw(self):
 
-        if self.laoding_time >= 0.0:
+        if self.loading_time_total >= self.loading_time:
             glLoadIdentity()
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             self.set_2d()
