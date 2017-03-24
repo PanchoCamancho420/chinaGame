@@ -11,6 +11,7 @@ import inputHandler
 import pointer
 import selector
 import loading
+import sky
 
 import os
 import sys
@@ -59,7 +60,7 @@ class World(pyglet.window.Window):
 
         self.loading = loading.Fact(self)
         self.update_ables.append(self.loading)
-        self.loading_time_total = 10.0
+        self.loading_time_total = 3.0
         self.loading_time = 0.0
 
         fort = building.Building(sand, 1, 1, .1)
@@ -80,6 +81,9 @@ class World(pyglet.window.Window):
         self.map.add_building(fort_outpost)
         self.map.add_building(fort_king)
         self.map.add_building(self.turret)
+
+        self.sky = sky.Sky(self.sand, self.textures[3])
+        self.draw_ables.append(self.sky)
 
         self.control_able_index = 0
         self.default_controllable_index = 0
@@ -241,6 +245,7 @@ class World(pyglet.window.Window):
 
         if self.loading_time_total >= self.loading_time:
             glLoadIdentity()
+            glClearColor(1.0, 1.0, 1.0, 0.0)
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             self.set_2d()
             self.loading.draw()
@@ -251,6 +256,7 @@ class World(pyglet.window.Window):
         self.draw_number += 1
 
         glLoadIdentity()
+        glClearColor(0.3, 0.8, 1.0, 0.0)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.camera.draw()
