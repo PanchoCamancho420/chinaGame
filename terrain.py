@@ -182,7 +182,6 @@ class Terrain(object):
 
         def above_water(point):
             ret = point[1] >= 0.4
-            print ret
             return ret
 
         above_0 = above_water(tri_point_0)
