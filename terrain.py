@@ -180,6 +180,18 @@ class Terrain(object):
         tri_point_1 = numpy_mat[1]
         tri_point_2 = numpy_mat[2]
 
+        def above_water(point):
+            ret = point[1] >= 0.4
+            print ret
+            return ret
+
+        above_0 = above_water(tri_point_0)
+        above_1 = above_water(tri_point_1)
+        above_2 = above_water(tri_point_2)
+
+        if (not above_0) and (not above_1) and (not above_2):
+            return
+
         glBindTexture(self.sand_texture.target, self.sand_texture.id)
 
         glBegin(GL_TRIANGLES)  # Begin drawing the pyramid with 4 triangles
