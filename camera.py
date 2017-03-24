@@ -18,7 +18,7 @@ class Camera(object):
         'down': pyglet.window.key.LSHIFT
     }
 
-    def __init__(self, window, position=(0, 0, 0), key_map=DEFAULT_KEY_MAP, movement_speed=DEFAULT_MOVEMENT_SPEED,
+    def __init__(self, window, shape, position=(0, -3.0, 0), key_map=DEFAULT_KEY_MAP, movement_speed=DEFAULT_MOVEMENT_SPEED,
                  mouse_sensitivity=DEFAULT_MOUSE_SENSITIVITY, y_inv=True):
         """Create camera object
         Arguments:
@@ -29,6 +29,7 @@ class Camera(object):
             mouse_sensitivity -- sensitivity of mouse (scalar)
             y_inv -- inversion turn above y-axis
         """
+        self.sand = shape
 
         self.__position = list(position)
 
@@ -49,6 +50,9 @@ class Camera(object):
 
         self.direction_getter = None
         self.is_pointing = False
+
+        self.max_distance = 5.0
+        self.max_height = 5.0
 
     def yaw(self, yaw):
         """Turn above x-axis"""
@@ -123,9 +127,27 @@ class Camera(object):
 
             if self.__input_handler.get_pressed()[self.key_map['down']]:
                 self.move_down(delta_time * self.movement_speed)
-
         if self.is_pointing:
             self.calc_direction()
+
+        if math.fabs(self.__position[0]) >= self.max_distance:
+            if self.__position[0] >= 0:
+                self.__position[0] = self.max_distance
+            else:
+                self.__position[0] = -self.max_distance
+
+        if math.fabs(self.__position[2]) >= self.max_distance:
+            if self.__position[2] >= 0:
+                self.__position[2] = self.max_distance
+            else:
+                self.__position[2] = -self.max_distance
+
+        if -self.__position[1] >= self.max_height:
+            self.__position[1] = -self.max_height
+
+        min_height = self.sand.get_z(self.__position[0], self.__position[2]) + .5
+        if self.__position[1] >= -min_height:
+            self.__position[1] = -min_height
 
     def set_control(self, mouse, key_board):
         self.mouse_control = mouse

@@ -88,7 +88,7 @@ class World(pyglet.window.Window):
         self.control_able_index = 0
         self.default_controllable_index = 0
 
-        self.camera = FpsCamera(self)
+        self.camera = FpsCamera(self, self.sand)
         self.control_ables.append(self.camera)
 
         self.sprite = sprite.Sprite(self, self.map.land)
