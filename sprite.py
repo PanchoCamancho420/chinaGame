@@ -112,7 +112,7 @@ class Sprite(object):
         return self.shape.get_xyz(self.xy[0], self.xy[1])
 
     def draw(self):
-        x, y, z = self.shape.get_xyz(self.xy[0], self.xy[1])
+        x, y, z = self.get_center()
         glPushMatrix()
         glTranslatef(x, z, y)
         glColor3f(*self.color)

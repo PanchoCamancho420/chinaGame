@@ -12,6 +12,7 @@ import pointer
 import selector
 import loading
 import sky
+import boat
 
 import os
 import sys
@@ -209,7 +210,7 @@ class World(pyglet.window.Window):
             else:
                 self.camera.cancel_pointing()
         if self.n_bumped.get_bumped():
-            insert_sprite = sprite.Sprite(self, self.map.land)
+            insert_sprite = boat.Boat(self, self.map.land)
             self.control_ables.append(insert_sprite)
             self.draw_ables.append(insert_sprite)
             self.update_ables.append(insert_sprite)
