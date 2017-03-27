@@ -39,8 +39,6 @@ class BeachAble(sprite.Sprite):
         return x, y, z
 
     def update(self, delta_time):
-        print 'color', self.color
-        print 'location', self.xy
         sprite.Sprite.update(self, delta_time)
         if not self.is_beached:
             center = self.get_center()

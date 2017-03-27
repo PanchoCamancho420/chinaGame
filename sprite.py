@@ -113,12 +113,10 @@ class Sprite(object):
 
     def draw(self):
         x, y, z = self.get_center()
-        # glColor4f(1.0, 1.0, 1.0, 0.0)
         glPushMatrix()
+        
         glTranslatef(x, z, y)
-        # glColor3f(*self.color)
-        glColor3f(1.0, 1.0, 1.0)
-        print self.color
+        glColor3f(*self.color)
 
         glBegin(GL_POLYGON)
 
