@@ -193,16 +193,18 @@ class Terrain(object):
 
         glBindTexture(self.sand_texture.target, self.sand_texture.id)
 
+        glColor3f(1.0, 1.0, 1.0)
+
         glBegin(GL_TRIANGLES)  # Begin drawing the pyramid with 4 triangles
-        glColor3f(1.0, 0.8, 0.8)  # Red
+        # glColor3f(1.0, 0.8, 0.8)  # Red
         glTexCoord2f(0.0, 0.0)
         glVertex3f(tri_point_0[0] * self.resolution, tri_point_0[1] * self.resolution, tri_point_0[2] * self.resolution)
 
-        glColor3f(0.8, 1.0, 0.8)  # Green
+        # glColor3f(0.8, 1.0, 0.8)  # Green
         glTexCoord2f(0.5 * self.texture_scale, 1.0 * self.texture_scale)
         glVertex3f(tri_point_1[0] * self.resolution, tri_point_1[1] * self.resolution, tri_point_1[2] * self.resolution)
 
-        glColor3f(0.8, 0.8, 1.0)  # Blue
+        # glColor3f(0.8, 0.8, 1.0)  # Blue
         glTexCoord2f(1.0 * self.texture_scale, 0.0)
         glVertex3f(tri_point_2[0] * self.resolution, tri_point_2[1] * self.resolution, tri_point_2[2] * self.resolution)
 

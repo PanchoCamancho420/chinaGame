@@ -6,9 +6,7 @@ from camera import Camera as FpsCamera
 import map
 from terrain import Terrain
 from terrainShape import TerrainShape
-import sprite
 import inputHandler
-import pointer
 import selector
 import loading
 import sky
@@ -47,7 +45,7 @@ class World(pyglet.window.Window):
         self.textures = self.load_textures()
 
         import random
-        seed = random.randrange(-1000, 1000)
+        seed = random.randrange(1000, 9999)
         print 'seed ', seed
         shape = TerrainShape(seed=seed, island_location=(0, 0), size=4, height=.5)
         sand = Terrain(self.textures[0], shape, size=(20, 20), resolution=1)
@@ -61,7 +59,7 @@ class World(pyglet.window.Window):
 
         self.loading = loading.Fact(self)
         self.update_ables.append(self.loading)
-        self.loading_time_total = 3.0
+        self.loading_time_total = 1.0
         self.loading_time = 0.0
 
         fort = building.Building(sand, 1, 1, .1)
@@ -71,8 +69,6 @@ class World(pyglet.window.Window):
         fort_outpost = building.Building(sand, -2, -2, .07)
         fort_king = building.Building(sand, 0, 0, .25)
 
-        self.turret = building.Turret(sand, -1, -1, .25)
-
         self.map = map.Map(self.textures[1], sand)
         self.update_ables.append(self.map)
         self.map.add_building(fort)
@@ -81,7 +77,6 @@ class World(pyglet.window.Window):
         self.map.add_building(fort_4)
         self.map.add_building(fort_outpost)
         self.map.add_building(fort_king)
-        self.map.add_building(self.turret)
 
         self.sky = sky.Sky(self.sand, self.textures[4])
         self.draw_ables.append(self.sky)
@@ -92,18 +87,11 @@ class World(pyglet.window.Window):
         self.camera = FpsCamera(self, self.sand)
         self.control_ables.append(self.camera)
 
-        self.sprite = sprite.Sprite(self, self.map.land)
-        self.control_ables.append(self.sprite)
-        self.draw_ables.append(self.sprite)
-        self.update_ables.append(self.sprite)
-        self.point_ables.append(self.sprite)
-
-        self.turret.point_at(self.sprite)
-
-        self.cursor = pointer.Arrow()
-        self.draw_ables.append(self.cursor)
-        self.update_ables.append(self.cursor)
-        self.cursor.point_at(self.sprite)
+        # self.sprite = sprite.Sprite(self, self.map.land)
+        # self.control_ables.append(self.sprite)
+        # self.draw_ables.append(self.sprite)
+        # self.update_ables.append(self.sprite)
+        # self.point_ables.append(self.sprite)
 
         self.selector = selector.Selector(shape=sand, window=self)
         self.draw_ables.append(self.selector)
@@ -210,7 +198,7 @@ class World(pyglet.window.Window):
             else:
                 self.camera.cancel_pointing()
         if self.n_bumped.get_bumped():
-            insert_sprite = boat.Boat(self, self.map.land)
+            insert_sprite = boat.BeachAble(self, self.map.land)
             self.control_ables.append(insert_sprite)
             self.draw_ables.append(insert_sprite)
             self.update_ables.append(insert_sprite)
