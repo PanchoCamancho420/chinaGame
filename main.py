@@ -198,7 +198,7 @@ class World(pyglet.window.Window):
             else:
                 self.camera.cancel_pointing()
         if self.n_bumped.get_bumped():
-            insert_sprite = boat.BeachAble(self, self.map.land)
+            insert_sprite = boat.BeachAble(self, self.map.land, random_xy=True)
             self.control_ables.append(insert_sprite)
             self.draw_ables.append(insert_sprite)
             self.update_ables.append(insert_sprite)

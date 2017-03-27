@@ -19,15 +19,18 @@ class Sky(object):
         pass
 
     def draw(self):
+        glPushMatrix()
         self._draw_one(-self.size, True)
         self._draw_one(self.size, True)
         self._draw_one(self.size, False)
         self._draw_one(-self.size, False)
+        glPopMatrix()
         # self._draw_one(self.size, self.size, True)
 
     def _draw_one(self, d, turn):
         # type: (float, float, bool) -> None
         glPushMatrix()
+        glEnable(GL_TEXTURE_2D)
 
         glRotatef(-90.0, 1.0, 0.0, 0.0)
         if turn:
@@ -72,5 +75,6 @@ class Sky(object):
         glVertex3f(self.size, 0.0, -self.size, )
 
         glEnd()
+        glDisable(GL_TEXTURE_2D)
 
         glPopMatrix()

@@ -23,6 +23,7 @@ class Water(object):
 
     def draw(self):
         glPushMatrix()
+        glEnable(GL_TEXTURE_2D)
 
         glTranslatef(self.x_skew, self.z_skew, self.y_skew)
 
@@ -63,5 +64,5 @@ class Water(object):
         glVertex3f(self.x_size, 0.0, -self.y_size,)
 
         glEnd()
-
+        glDisable(GL_TEXTURE_2D)
         glPopMatrix()

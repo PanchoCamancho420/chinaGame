@@ -55,16 +55,3 @@ class Selector(object):
         y_loc += self.height + (self.z_bob * self.z_bob_distance)
         self.arrow.set_xyz(x_loc, y_loc, z_loc)
         self.arrow.draw()
-
-        # glColor3f(1.0, 0.0, 1.0)
-        # glBegin(GL_TRIANGLES)
-
-        # glVertex3f(0.0, 1.0, 1.0)
-        # glVertex3f(0.0, 0.0, -1.0)  # point
-        # glVertex3f(0.0, -1.0, 1.0)
-
-        # glVertex3f(1.0, 0.0, 1.0)
-        # glVertex3f(0.0, 0.0, -1.0)  # point
-        # glVertex3f(-1.0, 0.0, 1.0)
-
-        # glEnd()

@@ -190,7 +190,7 @@ class Terrain(object):
 
         if (not above_0) and (not above_1) and (not above_2):
             return
-
+        glEnable(GL_TEXTURE_2D)
         glBindTexture(self.sand_texture.target, self.sand_texture.id)
 
         glColor3f(1.0, 1.0, 1.0)
@@ -209,3 +209,4 @@ class Terrain(object):
         glVertex3f(tri_point_2[0] * self.resolution, tri_point_2[1] * self.resolution, tri_point_2[2] * self.resolution)
 
         glEnd()
+        glDisable(GL_TEXTURE_2D)
