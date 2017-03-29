@@ -235,6 +235,12 @@ class World(pyglet.window.Window):
             else:
                 self.update_ables[i].update(delta_time)
                 i += 1
+        i = 0  # looks through other list
+        while i < len(self.point_ables):
+            if self.point_ables[i].clean():
+                del self.point_ables[i]
+            else:
+                i += 1
 
     def on_draw(self):
 

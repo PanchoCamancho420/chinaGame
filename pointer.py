@@ -171,10 +171,11 @@ class Laser(Arrow):
     def __init__(self, location=(0.0, 0.0, 0.0), normal_color=(0.0, 1.0, 0.0), aiming_color=(1.0, 0.0, 0.0),
                  firing_color=(1.0, .3, 1.0), scale=.25):
         Arrow.__init__(self, location=location, scale=scale)
+        self.damage = 20
         self.reload = 1.0
         self.fire_time = 0.2
         self.last_fired = 1000
-        self.rotate_speed = 1.0
+        self.rotate_speed = 10.0
         self.aim_speed = 30.0
         self.detection_distance = 4.0
         self.firing_distance = 1.0
@@ -186,6 +187,25 @@ class Laser(Arrow):
         self.direction_aimed = False
         self.angle_aimed = False
         self.shots = 0
+
+    def patrol(self, delta_time):
+        self.color = self.normal_color
+        self.angle_aimed = False
+        self.direction_aimed = False
+
+        self._direction += self.rotate_speed * delta_time
+
+        target_angle = 0
+
+        if math.fabs(self._angle - target_angle) <= delta_time * self.aim_speed:
+            self._angle = target_angle
+            self.angle_aimed = True
+        else:
+            self.angle_aimed = False
+            if target_angle < self._angle:
+                self._angle -= delta_time * self.aim_speed
+            else:
+                self._angle += delta_time * self.aim_speed
 
     def aim(self, delta_time):
         self.color = self.aiming_color
@@ -221,10 +241,10 @@ class Laser(Arrow):
             else:
                 self._angle += delta_time * self.aim_speed
 
-    def get_shots(self):
+    def get_damage(self):
         val = self.shots
         self.shots = 0
-        return val
+        return val * self.damage
 
     def fire(self, delta_time):
         self.last_fired += delta_time
@@ -249,6 +269,8 @@ class Laser(Arrow):
                 self.aim(delta_time)
             else:
                 self.color = self.normal_color
+        else:
+            self.patrol(delta_time)
         self.fire(delta_time)
         self._direction %= 360.0
 

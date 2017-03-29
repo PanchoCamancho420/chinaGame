@@ -140,8 +140,12 @@ class Turret(Building):
                     min_index = i
                     min_distance = distance
             self.arrow.point_at(self.pointer_pointer[min_index])
-
-        self.arrow.update(delta_time)
+            self.arrow.update(delta_time)
+            damage = self.arrow.get_damage()
+            self.pointer_pointer[min_index].attack(damage)
+        else:
+            self.arrow.cancel_pointing()
+            self.arrow.update(delta_time)
 
     def draw(self):
         self.arrow.draw()
