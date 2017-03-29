@@ -6,31 +6,31 @@ import sys
 random_fact_list = [
     'China was the first country to have vending machines',
 
-    'China is the largest country by population',
+    # 'China is the largest country by population',
 
     'As Nikola Tesla said:/'
     ' "coming back from China to America was like taking a time machine to 50 year older technology"',
 
-    'The Chinese government owns the near side of the moon and helps all the other weak'
-    ' countries refuel their space ships',
+    # 'The Chinese government owns the near side of the moon and helps all the other weak'
+    # ' countries refuel their space ships',
 
-    '99.9% of the world economy is controlled by china',
+    # '99.9% of the world economy is controlled by china',
 
-    'Velcro, zippers, buttons and belt buckle where all invented by a Chinese librarian',
+    'Velcro, zippers, buttons and the belt buckle where all invented by a Chinese librarian',
 
-    'On average China builds 2.6 new skyscrapers per day',
+    # 'On average China builds 2.6 new skyscrapers per day',
 
-    'Only 0.23% of Chinese citizens are illiterate',
+    # 'Only 0.23% of Chinese citizens are illiterate',
 
-    'In every olympic event that China participated in for the last 30 years China earned either a gold or silver',
+    # 'In every olympic event that China participated in for the last 30 years China earned either a gold or silver',
 
     'The Chinese Sunway TaihuLight super computer is more powerful than every computer in North America combined',
 
-    'the Chinese Planet Colonization Mission (CEPCM) will have over 10 billion citizens within the next year',
+    # 'the Chinese Planet Colonization Mission (CEPCM) will have over 10 billion citizens within the next year',
 
-    'The chinese government is extremely crafty, ounce they even made a a thing called:/'
+    'The chinese government is extremely crafty, ounce they even made a thing called:/'
     '"Global Warming" just to make america fall further behind economically/'
-    'they even made fake smoke to make it seem like they where cleaning the air in China'
+    'they even made fake smog to make it seem like they where cleaning the air in China'
 ]
 
 long_string_test_list = ['111111111111111111111111111111111111111111111111111111111111111111111111'
