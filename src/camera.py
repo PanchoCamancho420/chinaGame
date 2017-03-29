@@ -1,5 +1,7 @@
-import pyglet
 import math
+
+import pyglet
+
 import inputHandler
 
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-import pyglet
-from pyglet.gl import *
-from camera import Camera as FpsCamera
-
-import terrainShape
-from terrain import Terrain
-
 import os
 import sys
+
+import pyglet
+from pyglet.gl import *
+
+import terrainShape
+from camera import Camera as FpsCamera
+from terrain import Terrain
 
 
 def resource_path(relative_path):

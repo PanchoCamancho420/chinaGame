@@ -1,6 +1,8 @@
-from pyglet.gl import *
-import inputHandler
 import math
+
+from pyglet.gl import *
+
+import inputHandler
 
 
 class Sprite(object):

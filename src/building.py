@@ -1,4 +1,5 @@
 from pyglet.gl import *
+
 import pointer
 import terrain
 

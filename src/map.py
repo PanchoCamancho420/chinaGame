@@ -1,5 +1,5 @@
 import water
-import building as building_class  # lol best practice
+import building as building_class
 
 
 class Map(object):

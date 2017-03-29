@@ -1,19 +1,20 @@
 #!/usr/bin/env python
-import pyglet
-from pyglet.gl import *
-import building
-from camera import Camera as FpsCamera
-import map
-from terrain import Terrain
-from terrainShape import TerrainShape
-import inputHandler
-import selector
-import loading
-import sky
-import boat
-
 import os
 import sys
+
+import pyglet
+from pyglet.gl import *
+
+import boat
+import building
+import inputHandler
+import loading
+import map
+import selector
+import sky
+from camera import Camera as FpsCamera
+from terrain import Terrain
+from terrainShape import TerrainShape
 
 
 def resource_path(relative_path):

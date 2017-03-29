@@ -1,8 +1,10 @@
-import pointer
 import math
-import inputHandler
+
+import pointer
 import pyglet
+
 import terrain
+import inputHandler
 
 
 class Selector(object):

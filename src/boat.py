@@ -1,7 +1,9 @@
-import sprite
 import math
 import random
+
 from pyglet.gl import *
+
+import sprite
 
 
 class Amphibian(sprite.Sprite):
