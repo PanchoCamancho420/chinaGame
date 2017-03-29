@@ -33,7 +33,7 @@ class World(pyglet.window.Window):
         super(World, self).__init__(*args, **kwargs)
         self.scale = 1.0
         self.pos = (0, 0, 0)
-        self.fov = 65
+        self.fov = 75
         self.render_distance = 100.0
         self.window_x = 1080
         self.window_y = 720
@@ -60,7 +60,7 @@ class World(pyglet.window.Window):
 
         self.loading = loading.Fact(self)
         self.update_ables.append(self.loading)
-        self.loading_time_total = 1.0
+        self.loading_time_total = 10.0
         self.loading_time = 0.0
 
         fort = building.Building(sand, 1, 1, .1)
@@ -167,7 +167,7 @@ class World(pyglet.window.Window):
         glViewport(0, 0, width, height)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(65.0, width / float(height), 0.1, 60.0)
+        gluPerspective(self.fov, width / float(height), 0.01, self.render_distance)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
@@ -284,7 +284,7 @@ class World(pyglet.window.Window):
         glViewport(0, 0, width, height)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(65.0, width / float(height), 0.1, self.render_distance)
+        gluPerspective(65.0, width / float(height), .01, self.render_distance)
         glMatrixMode(GL_MODELVIEW)
 
 
