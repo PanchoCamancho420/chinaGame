@@ -43,6 +43,10 @@ class Arrow(object):
         self._direction = direction
         self._angle = angle
 
+    @staticmethod
+    def clean():
+        return False
+
     def update(self, delta_time):
         del delta_time
         # self.direction += 1.0 * delta_time

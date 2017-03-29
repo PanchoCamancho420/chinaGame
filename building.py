@@ -10,9 +10,23 @@ class Building(object):
         self.scale = scale
         self.shape = shape
         self.x_loc, self.y_loc, self.z_loc = shape.get_xyz(self.x, self.y)
+        self.hp = 100
 
     def get_center(self):
         return self.x_loc, self.y_loc, self.z_loc
+
+    def attack(self, damage):
+        self.hp -= damage
+
+    def heal(self, healing):
+        if self.hp > 0:
+            self.hp += healing
+
+    def get_hp(self):
+        return self.hp
+
+    def clean(self):
+        return self.hp <= 0  # if the building has got no hp, git rid of it
 
     def update(self, delta_time):
         pass

@@ -227,8 +227,14 @@ class World(pyglet.window.Window):
                 self.map.add_building(insert_building)
 
         self.camera.update(delta_time)
-        for update_able in self.update_ables:
-            update_able.update(delta_time)
+
+        i = 0  # looks through each element and deletes or updates
+        while i < len(self.update_ables):
+            if self.update_ables[i].clean():
+                del self.update_ables[i]
+            else:
+                self.update_ables[i].update(delta_time)
+                i += 1
 
     def on_draw(self):
 
@@ -251,8 +257,13 @@ class World(pyglet.window.Window):
         self.camera.draw()
         self.map.draw()
 
-        for drawable in self.draw_ables:
-            drawable.draw()
+        i = 0  # looks through each element and deletes or updates
+        while i < len(self.draw_ables):
+            if self.draw_ables[i].clean():
+                del self.draw_ables[i]
+            else:
+                self.draw_ables[i].draw()
+                i += 1
 
         self.set_2d()
 

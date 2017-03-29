@@ -19,18 +19,19 @@ class Amphibian(sprite.Sprite):
 class BeachAble(sprite.Sprite):
     def __init__(self, window, shape, random_xy=False, color=(0.0, 0.7, 0.0), scale=.1, max_velocity=5.0, xy=(0, 0)):
         if random_xy:
-            distance = 3.0  # should be 11
+            distance = 11.0  # should be 11
             self.angle = random.uniform(0, 360)
             x_leg = math.sin(math.radians(self.angle)) * distance
             y_leg = math.cos(math.radians(self.angle)) * distance
             real_xy = x_leg, y_leg
-            self.angle += 90
         else:
             real_xy = xy
             self.angle = 0
 
         sprite.Sprite.__init__(self, window=window, shape=shape, color=color,
                                scale=scale, max_velocity=max_velocity, xy=real_xy)
+
+        self.attack_speed = 0.5
         self.is_beached = False
         self.beach_x = 0
         self.beach_z = 0
@@ -49,6 +50,10 @@ class BeachAble(sprite.Sprite):
                 self.is_beached = True
                 self.beach_x = center[0]
                 self.beach_z = center[1]
+            else:
+                self.xy[0] -= delta_time * math.sin(math.radians(self.angle)) * self.attack_speed
+                self.xy[1] -= delta_time * math.cos(math.radians(self.angle)) * self.attack_speed
+
         else:
             self.xy[0] = self.beach_x
             self.xy[1] = self.beach_z
@@ -59,7 +64,7 @@ class BeachAble(sprite.Sprite):
 
         glTranslatef(x, z, y)
 
-        glRotatef(self.angle, 0.0, 1.0, 0.0)
+        glRotatef(self.angle + 90.0, 0.0, 1.0, 0.0)
 
         glColor3f(*self.color)
 

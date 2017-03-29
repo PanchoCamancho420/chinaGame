@@ -18,6 +18,9 @@ class Sky(object):
     def update(self, delta_time):
         pass
 
+    def clean(self):
+        return False
+
     def draw(self):
         glPushMatrix()
         self._draw_one(-self.size, True)

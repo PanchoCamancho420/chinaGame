@@ -55,6 +55,10 @@ class Fact(object):
         random_str = random.choice(random_fact_list)
         return random_str
 
+    @staticmethod
+    def clean():
+        return False
+
     def update(self, delta_time):
         del delta_time
         float_complete = self.window.loading_time / self.window.loading_time_total

@@ -15,6 +15,7 @@ class Sprite(object):
 
         self.scale = scale
         self.color = color
+        self.hp = 100
 
         self.input_handler = inputHandler.InputHandler()
         window.push_handlers(self.input_handler)
@@ -62,6 +63,19 @@ class Sprite(object):
         else:
             new_speed = 0
         return new_speed
+
+    def attack(self, damage):
+        self.hp -= damage
+
+    def heal(self, healing):
+        if self.hp > 0:
+            self.hp += healing
+
+    def get_hp(self):
+        return self.hp
+
+    def clean(self):
+        return self.hp <= 0  # if the building has got no hp, git rid of it
 
     def update(self, delta_time):
         self.xy[0] += delta_time * self.x_velocity

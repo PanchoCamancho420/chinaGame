@@ -38,6 +38,10 @@ class Selector(object):
         y_loc += self.height + (self.z_bob * self.z_bob_distance)
         return x_loc, y_loc, z_loc
 
+    @staticmethod
+    def clean():
+        return False
+
     def update(self, delta_time):
         self.total_time += delta_time
         self.z_bob = math.cos(self.total_time * self.z_bob_speed)

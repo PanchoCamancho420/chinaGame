@@ -1,5 +1,5 @@
 import water
-import building as building_class
+import building as building_class  # lol best practice
 
 
 class Map(object):
@@ -24,12 +24,25 @@ class Map(object):
                 return True
         return False
 
+    @staticmethod
+    def clean():
+        return False
+
     def update(self, delta_time):
         """change the way the water and towers look"""
         self.water.update(delta_time)
         self.land.update(delta_time)
-        for building in self.buildings:
-            building.update(delta_time=delta_time)
+
+        i = 0  # looks through each element and deletes or updates
+        while i < len(self.buildings):
+            if self.buildings[i].clean():
+                del self.buildings[i]
+            else:
+                self.buildings[i].update(delta_time=delta_time)
+                i += 1
+
+    def get_buildings(self):
+        return self.buildings
 
     def draw(self):
         """draw buildings, land and water"""

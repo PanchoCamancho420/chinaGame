@@ -18,6 +18,10 @@ class Water(object):
         self.texture = texture
         self.texture_scale = texture_scale
 
+    @staticmethod
+    def clean():
+        return False
+
     def update(self, delta_time):
         pass
 
