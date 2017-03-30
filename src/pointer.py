@@ -268,7 +268,7 @@ class Laser(Arrow):
             if self.in_range(self.detection_distance):
                 self.aim(delta_time)
             else:
-                self.color = self.normal_color
+                self.patrol(delta_time)
         else:
             self.patrol(delta_time)
         self.fire(delta_time)
