@@ -22,7 +22,7 @@ class Sprite(object):
         self.input_handler = inputHandler.InputHandler()
         window.push_handlers(self.input_handler)
 
-        self.keyboard_control = True
+        self.keyboard_control = False
 
         self.last_pressed = 10000.0
 
