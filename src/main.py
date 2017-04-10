@@ -6,6 +6,7 @@ import pyglet
 from pyglet.gl import *
 
 import boat
+import noobie
 import building
 import inputHandler
 import loading
@@ -82,6 +83,10 @@ class World(pyglet.window.Window):
 
         self.camera = FpsCamera(self, self.sand)
         self.control_ables.append(self.camera)
+
+        noob = noobie.Noob(self, self.sand, self.map.get_buildings())
+        self.draw_ables.append(noob)
+        self.update_ables.append(noob)
 
         # self.sprite = sprite.Sprite(self, self.map.land)
         # self.control_ables.append(self.sprite)
